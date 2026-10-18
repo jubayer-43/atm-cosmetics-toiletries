@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://atmbd2024-dotcom.github.io/atm-cosmetics-toiletries/sitemap.xml
+Sitemap: https://atmcosmeticsandtoiletries.publicvm.com/sitemap.xml
