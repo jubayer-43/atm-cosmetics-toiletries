@@ -1318,3 +1318,1606 @@ if(pc)pc.addEventListener("click",function(){open("ketoclean")});
 </script>
 </body>
 </html>
+
+<script>
+(function(){
+var ranges=document.querySelector('#ranges');
+if(!ranges||document.getElementById('future'))return;
+var s=document.createElement('section');
+s.id='future';
+s.innerHTML='<div class="wrap">'+
+'<div class="ttl"><span class="kicker">Coming soon</span><h2 class="kt">Future <em>products.</em></h2><p class="sub">New products from the Ketoclean family, on their way to your shelves.<span class="bn">কেটোক্লিন পরিবারের নতুন পণ্য, শীঘ্রই আপনার দোকানে</span></p></div>'+
+'<div id="futGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px"></div>'+
+'<p class="sub" style="text-align:center;margin-top:34px;font-size:16px">Gentle formulas with Tea Tree Oil, Zinc Pyrithione, Aloe Vera and Pro-Vitamin B5 — sulfate &amp; paraben free.<span class="bn">টি-ট্রি অয়েল, জিঙ্ক পাইরিথিওন, অ্যালোভেরা ও প্রো-ভিটামিন বি৫ সমৃদ্ধ — সালফেট ও প্যারাবেন মুক্ত</span></p>'+
+'</div>';
+ranges.parentNode.insertBefore(s,ranges.nextSibling);
+var items=[
+['Ketoclean<br>Anti-Dandruff<br>Shampoo','Ketoclean Shampoo','Anti-Dandruff · 50ml &amp; 200ml','Clean scalp, healthier hair · শীঘ্রই আসছে'],
+['Ketoclean<br>Conditioner','Ketoclean Conditioner','Nourishes &amp; smooths · 100ml &amp; 200ml','মসৃণ ও পুষ্ট চুল · শীঘ্রই আসছে'],
+['Ketoclean<br>Scalp Scrub','Ketoclean Scalp Scrub','Deep cleanse &amp; detox · 100ml','গভীর পরিষ্কার · শীঘ্রই আসছে'],
+['Ketoclean<br>Scalp Tonic','Ketoclean Scalp Tonic','Refreshes &amp; soothes · 100ml','স্ক্যাল্পকে সজীব করে · শীঘ্রই আসছে']
+];
+var g=document.getElementById('futGrid');
+items.forEach(function(it){
+var d=document.createElement('div');
+d.setAttribute('style','background:var(--gl-bg);border:1px solid var(--gl-bd);box-shadow:var(--gl-sh);border-radius:32px;padding:8px;position:relative');
+d.innerHTML='<span style="position:absolute;top:17px;left:17px;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)">Coming soon</span>'+
+'<div style="aspect-ratio:1/1;border-radius:25px;display:grid;place-items:center;text-align:center;padding:16px;background:linear-gradient(160deg,#0b4a66,#04141d);color:#7ed3f3;font:italic 600 23px Cormorant Garamond,serif">'+it[0]+'</div>'+
+'<div style="padding:14px 12px"><b style="display:block;font:600 21px Cormorant Garamond,serif;color:var(--ink)">'+it[1]+'</b><span style="display:block;color:var(--soft);font-size:14px;margin-top:3px">'+it[2]+'</span><i style="display:block;font-style:normal;font:500 12px Hind Siliguri,sans-serif;color:var(--mute3);margin-top:8px">'+it[3]+'</i></div>';
+g.appendChild(d);
+});
+})();
+</script>
+
+<script>
+(function(){
+var imgs=[
+'https://d3p662obnq9uz2.cloudfront.net/generated-images/cef6b1fb.webp',
+'https://d3p662obnq9uz2.cloudfront.net/generated-images/fbde07d3.webp',
+'https://d3p662obnq9uz2.cloudfront.net/generated-images/2266f747.webp',
+'https://d3p662obnq9uz2.cloudfront.net/generated-images/84eb1706.webp'
+];
+function putImages(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var cards=g.children;
+if(cards.length<4)return false;
+for(var i=0;i<4;i++){
+var ph=cards[i].querySelector('div[style*="aspect-ratio"]');
+if(ph){
+ph.innerHTML='';
+var im=document.createElement('img');
+im.src=imgs[i];
+im.alt=cards[i].querySelector('b').textContent;
+im.loading='lazy';
+im.decoding='async';
+im.setAttribute('style','width:100%;height:100%;object-fit:cover;display:block');
+ph.appendChild(im);
+}
+}
+return true;
+}
+if(!putImages()){setTimeout(putImages,300);setTimeout(putImages,1200);}
+})();
+</script>
+
+<script>
+(function(){
+function init(){
+var old=document.querySelector('.reviews-track');
+if(!old||!old.parentNode)return;
+var track=old.cloneNode(true);
+old.parentNode.replaceChild(track,old);
+var st=document.createElement('style');
+st.textContent='.reviews-track{animation:none!important}';
+document.head.appendChild(st);
+var x=0,half=0,paused=false,last=0;
+var SPEED=55;
+function measure(){half=track.scrollWidth/2}
+function loop(now){
+if(!last)last=now;
+var dt=(now-last)/1000;
+last=now;
+if(dt>0.1)dt=0.1;
+if(!paused){x-=SPEED*dt}
+if(half>0){
+if(x<=-half)x+=half;
+if(x>0)x-=half;
+track.style.transform='translateX('+x.toFixed(2)+'px)';
+}else{
+measure();
+}
+requestAnimationFrame(loop);
+}
+measure();
+requestAnimationFrame(loop);
+setInterval(measure,1500);
+window.addEventListener('resize',measure);
+window.addEventListener('load',measure);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
+track.addEventListener('mouseenter',function(){paused=true});
+track.addEventListener('mouseleave',function(){paused=false});
+track.addEventListener('touchstart',function(){paused=true},{passive:true});
+track.addEventListener('touchend',function(){paused=false},{passive:true});
+}
+function go(){try{init()}catch(e){setTimeout(go,500)}}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',go)}else{go()}
+})();
+</script>
+
+<script>
+(function(){
+function addRangeCard(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<4){return false}
+if(g.querySelector('.kc-range-card')){return true}
+var d=document.createElement('div');
+d.className='kc-range-card';
+d.setAttribute('style','background:var(--gl-bg);border:1px solid var(--gl-bd);box-shadow:var(--gl-sh);border-radius:32px;padding:8px;position:relative');
+d.innerHTML='<span style="position:absolute;top:17px;left:17px;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)">Coming soon</span>'+
+'<div style="aspect-ratio:1/1;border-radius:25px;overflow:hidden;background:linear-gradient(160deg,#0b4a66,#04141d)"><img src="https://d3p662obnq9uz2.cloudfront.net/file-interaction/05be9610-future-product-photo.webp" alt="Ketoclean range — Anti-Dandruff Shampoo, Conditioner, Scalp Scrub and Scalp Tonic" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></div>'+
+'<div style="padding:14px 12px"><b style="display:block;font:600 21px Cormorant Garamond,serif;color:var(--ink)">The Full Ketoclean Range</b><span style="display:block;color:var(--soft);font-size:14px;margin-top:3px">Shampoo · Conditioner · Scalp Scrub · Scalp Tonic</span><i style="display:block;font-style:normal;font:500 12px Hind Siliguri,sans-serif;color:var(--mute3);margin-top:8px">পুরো কেটোক্লিন পরিবার · শীঘ্রই আসছে</i></div>';
+g.appendChild(d);
+return true;
+}
+if(!addRangeCard()){setTimeout(addRangeCard,300);setTimeout(addRangeCard,1200);setTimeout(addRangeCard,3000)}
+})();
+</script>
+
+<script>
+(function(){
+function fix(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var rc=g.querySelector('.kc-range-card');
+if(rc&&rc.parentNode)rc.parentNode.removeChild(rc);
+var cards=g.children;
+if(cards.length<1)return false;
+var ph=cards[0].querySelector('div[style*="aspect-ratio"]');
+if(!ph)return false;
+var url='https://d3p662obnq9uz2.cloudfront.net/file-interaction/05be9610-future-product-photo.webp';
+ph.innerHTML='<div style="width:100%;height:100%;background:url(\''+url+'\') 0% 7% / 170% auto no-repeat"></div>';
+return true;
+}
+if(!fix()){setTimeout(fix,300);setTimeout(fix,1200);setTimeout(fix,3000)}
+})();
+</script>
+
+<script>
+(function(){
+function fix(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var cards=g.children;
+if(cards.length<1)return false;
+var holder=cards[0].querySelector('div[style*="background:url"]');
+if(!holder)return false;
+holder.style.backgroundSize='290% auto';
+holder.style.backgroundPosition='13.4% 35.5%';
+holder.style.backgroundRepeat='no-repeat';
+return true;
+}
+if(!fix()){setTimeout(fix,300);setTimeout(fix,1200);setTimeout(fix,3000)}
+})();
+</script>
+
+<script>
+(function(){
+function fix(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var cards=g.children;
+if(cards.length<1)return false;
+var holder=cards[0].querySelector('div[style*="background:url"]');
+if(!holder)return false;
+holder.style.backgroundSize='298% auto';
+holder.style.backgroundPosition='12% 38%';
+holder.style.backgroundRepeat='no-repeat';
+return true;
+}
+if(!fix()){setTimeout(fix,300);setTimeout(fix,1200);setTimeout(fix,3000)}
+})();
+</script>
+
+<script>
+(function(){
+function useNew(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<1){return false}
+var holder=cards0holder(g);
+if(!holder)return false;
+holder.style.background='url(\'https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp\') center 12% / cover no-repeat';
+return true;
+}
+function cards0holder(g){
+return g.children[0].querySelector('div[style*="background:url"]')
+}
+if(!useNew()){setTimeout(useNew,300);setTimeout(useNew,1200);setTimeout(useNew,3000)}
+})();
+</script>
+
+<script>
+(function(){
+var st=document.createElement('style');
+st.textContent='#kcPhoto{background:url(\'https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp\') center 12% / cover no-repeat!important}';
+document.head.appendChild(st);
+function lock(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<1)return false;
+var holder=g.children[0].querySelector('div[style*="background:url"]');
+if(!holder)return false;
+holder.id='kcPhoto';
+return true;
+}
+if(!lock()){setTimeout(lock,200);setTimeout(lock,500);setTimeout(lock,1000);setTimeout(lock,1500);setTimeout(lock,3200);setTimeout(lock,3500)}
+})();
+</script>
+
+<script>
+(function(){
+var NEW='https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp';
+function findPh(card){
+var divs=card.querySelectorAll('div');
+for(var i=0;i<divs.length;i++){
+var d=divs[i];
+var st=d.getAttribute('style')||'';
+if((d.style&&d.style.aspectRatio)||st.indexOf('aspect-ratio')>-1){return d}
+}
+return null}
+function apply(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<1)return false;
+var card=g.children[0];
+var ph=findPh(card);
+if(!ph)return false;
+if(ph.querySelector('img[data-kc-final]'))return true;
+ph.innerHTML='';
+ph.style.background='none';
+ph.style.backgroundImage='none';
+var im=document.createElement('img');
+im.src=NEW;
+im.alt='Ketoclean Anti-Dandruff Shampoo';
+im.loading='lazy';
+im.decoding='async';
+im.setAttribute('data-kc-final','1');
+im.setAttribute('style','width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block');
+ph.appendChild(im);
+return true}
+var times=[0,200,500,900,1400,2000,2600,3200,3600,4200,5000,6500,8000];
+for(var i=0;i<times.length;i++){setTimeout(apply,times[i])}
+})();
+</script>
+
+<script>
+(function(){
+function tweak(){
+var im=document.querySelector('#futGrid img[data-kc-final]');
+if(!im)return false;
+im.style.objectPosition='center 6%';
+return true}
+if(!tweak()){setTimeout(tweak,300);setTimeout(tweak,1000);setTimeout(tweak,2500);setTimeout(tweak,4000)}
+})();
+</script>
+
+<script>
+(function(){
+var NEW4=[
+['HydraGlow<br>Face Wash','HydraGlow Face Wash','Deep cleanse & fresh glow · 100ml','ত্বক পরিষ্কার ও সজীব · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/4e17d7d4.webp'],
+['SoftCare<br>Body Lotion','SoftCare Body Lotion','24hr smooth & soft skin · 250ml','মসৃণ ও কোমল ত্বক · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/103d5806.webp'],
+['FreshMint<br>Toothpaste','FreshMint Toothpaste','Long-lasting fresh breath · 120g','টাটকা নিঃশ্বাস · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/da98abb9.webp'],
+['PureHands<br>Hand Wash','PureHands Hand Wash','Gentle yet effective clean · 250ml','হাত পরিষ্কার ও সুরক্ষা · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/9b53158e.webp']
+];
+function addCards(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<4)return false;
+if(g.querySelector('.kc-extra-card'))return true;
+NEW4.forEach(function(it){
+var d=document.createElement('div');
+d.className='kc-extra-card';
+d.setAttribute('style','background:var(--gl-bg);border:1px solid var(--gl-bd);box-shadow:var(--gl-sh);border-radius:32px;padding:8px;position:relative');
+d.innerHTML='<span style="position:absolute;top:17px;left:-position;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)">Coming soon</span>'+
+'<div style="aspect-ratio:1/1;border-radius:25px;overflow:hidden;background:linear-gradient(160deg,#0b4a66,#04141d)"><img src="'+it[4]+'" alt="'+it[1]+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></div>'+
+'<div style="padding:14px 12px"><b style="display:block;font:600 21px Cormorant Garamond,serif;color:var(--ink)">'+it[1]+'</b><span style="display:block;color:var(--soft);font-size:14px;margin-top:3px">'+it[2]+'</span><i style="display:block;font-style:normal;font:500 12px Hind Siliguri,sans-serif;color:var(--mute3);margin-top:8px">'+it[3]+'</i></div>';
+if(d.querySelector('span')&&d.querySelector('span').getAttribute('style')){d.querySelector('span').setAttribute('style',d.querySelector('span').getAttribute('style').replace('left:-position','left:17px'))}
+g.appendChild(d);
+});
+return true;
+}
+if(!addCards()){setTimeout(addCards,300);setTimeout(addCards,1200);setTimeout(addCards,3000)}
+})();
+</script>
+
+<script>
+(function(){
+function fixBadges(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var cards=g.querySelectorAll('.kc-extra-card');
+if(cards.length<1)return false;
+for(var i=0;i<cards.length;i++){
+var b=cards[i].querySelector('span');
+if(b)b.setAttribute('style','position:absolute;top:17px;left:17px;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)');
+}
+return true;
+}
+if(!fixBadges()){setTimeout(fixBadges,400);setTimeout(fixBadges,1300);setTimeout(fixBadges,3100)}
+})();
+</script>
+
+<script>
+(function(){
+var SWAP={
+'HydraGlow Face Wash':'https://d3p662obnq9uz2.cloudfront.net/generated-images/7d8b9d3e.webp',
+'FreshMint Toothpaste':'https://d3p662obnq9uz2.cloudfront.net/generated-images/4c58d87c.webp'
+};
+function swap(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var cards=g.querySelectorAll('.kc-extra-card');
+var done=0;
+for(var i=0;i<cards.length;i++){
+var im=cards[i].querySelector('img');
+if(!im)continue;
+for(var k in SWAP){
+if(im.getAttribute('alt')===k||im.alt===k){
+if(im.getAttribute('src')!==SWAP[k]){
+im.src=SWAP[k];
+im.removeAttribute('loading')
+}
+done++
+}
+}
+}
+return done>=2
+}
+var t=[0,300,600,1000,1600,2400,3300,4300,5500,7000];
+for(var i=0;i<t.length;i++){setTimeout(swap,t[i])}
+})();
+</script>
+
+<script>
+(function(){
+function swapFM(){
+var g=document.getElementById('futGrid');
+if(!g)return false;
+var im=g.querySelector('.kc-extra-card img[alt="FreshMint Toothpaste"]')||Array.prototype.slice.call(g.querySelectorAll('.kc-extra-card img')).filter(function(x){return x.alt.indexOf('FreshMint')>-1})[0];
+if(!im)return false;
+var NEW='https://d3p662obnq9uz2.cloudfront.net/generated-images/828c8405.webp';
+if(im.src!==NEW){im.src=NEW;im.removeAttribute('loading')}
+return true}
+var t=[0,300,700,1200,2000,3000,4200,5600,7200,9000];
+for(var i=0;i<t.length;i++){setTimeout(swapFM,t[i])}
+})();
+</script>
+<style id="kc-shampoo-fix">
+#futGrid>div:first-child>div[style*="aspect-ratio"]{background:linear-gradient(160deg,#0b4a66,#04141d)!important}
+</style>
+<script>
+(function(){
+var SRC='https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp';
+function fix(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<1)return false;
+var card=g.children[0];
+var ph=null;
+var divs=card.querySelectorAll('div');
+for(var i=0;i<divs.length;i++){var st=divs[i].getAttribute('style')||'';if((divs[i].style&&divs[i].style.aspectRatio)||st.indexOf('aspect-ratio')>-1){ph=divs[i];break}}
+if(!ph)return false;
+ph.style.background='none';
+ph.style.backgroundImage='none';
+ph.setAttribute('style',(ph.getAttribute('style')||'')+';background:none!important;background-image:none!important;aspect-ratio:1/1!important;border-radius:25px!important;overflow:hidden!important;display:block!important');
+var im=ph.querySelector('img[data-kc-final]');
+if(!im){
+ph.innerHTML='';
+im=document.createElement('img');
+im.src=SRC;
+im.alt='Ketoclean Anti-Dandruff Shampoo';
+im.decoding='async';
+im.setAttribute('data-kc-final','1');
+ph.appendChild(im);
+}
+im.src=SRC;
+im.setAttribute('style','width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;display:block!important;border-radius:0!important');
+return true
+}
+var t=[0,200,500,1000,1600,2500,3500,5000,7000,9000,12000,16000];
+for(var i=0;i<t.length;i++)setTimeout(fix,t[i]);
+window.addEventListener('load',fix);
+})();
+</script><style id="fut-uniform-cards-final">
+#futGrid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))!important;gap:24px!important}
+#futGrid>div{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-sh)!important;border-radius:32px!important;padding:8px!important;position:relative!important;margin:0!important}
+#futGrid>div>div[style*="aspect-ratio"]{aspect-ratio:1/1!important;width:100%!important;height:auto!important;border-radius:25px!important;overflow:hidden!important;background:linear-gradient(160deg,#0b4a66,#04141d)!important;display:block!important;margin:0!important;padding:0!important}
+#futGrid>div>div[style*="aspect-ratio"]>div{width:100%!important;height:100%!important;border-radius:25px!important;overflow:hidden!important}
+#futGrid>div>div[style*="aspect-ratio"] img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important;border-radius:0!important}
+#futGrid>div:first-child>div[style*="aspect-ratio"] img{object-fit:contain!important;object-position:center!important}
+#futGrid>div>div[style*="padding:14px"]{padding:14px 12px!important;text-align:center}
+#futGrid b{font:600 21px 'Cormorant Garamond',serif!important;color:var(--ink)!important}
+#futGrid>div>span{position:absolute!important;top:17px!important;left:17px!important;z-index:2!important;padding:5px 12px!important;border-radius:999px!important;font:600 11px 'Hind Siliguri',sans-serif!important;color:#4fd37a!important;background:rgba(37,211,102,.14)!important;border:1px solid rgba(79,211,122,.35)!important}
+</style><style id="fut-cards-absolute-final">
+#futGrid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))!important;gap:24px!important}
+#futGrid>div{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-sh)!important;border-radius:32px!important;padding:8px!important;position:relative!important;margin:0!important;width:auto!important}
+#futGrid>div>div[style*="aspect-ratio"]{aspect-ratio:1/1!important;width:100%!important;height:auto!important;border-radius:25px!important;overflow:hidden!important;background:linear-gradient(160deg,#0b4a66,#04141d)!important;display:block!important;margin:0!important;padding:0!important}
+#futGrid>div>div[style*="aspect-ratio"]>div{width:100%!important;height:100%!important;border-radius:25px!important;overflow:hidden!important;background:linear-gradient(160deg,#0b4a66,#04141d)!important}
+#futGrid>div>div[style*="aspect-ratio"] img{width:100%!important;height:100%!important;object-position:center!important;display:block!important;border-radius:0!important}
+#futGrid>div>div[style*="padding:14px"]{padding:14px 12px!important;text-align:center}
+#futGrid b{font:600 21px 'Cormorant Garamond',serif!important;color:var(--ink)!important}
+#futGrid>div>span{position:absolute!important;top:17px!important;left:17px!important;z-index:2!important}
+</style>
+<script>
+(function(){
+var KC='https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp';
+function final(){
+var g=document.getElementById('futGrid');
+if(!g||g.children.length<8)return false;
+for(var i=0;i<8;i++){
+var card=g.children[i];
+card.setAttribute('style','background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-sh)!important;border-radius:32px!important;padding:8px!important;position:relative!important;margin:0!important');
+var ph=null,divs=card.querySelectorAll('div');
+for(var j=0;j<divs.length;j++){var st=divs[j].getAttribute('style')||'';if(st.indexOf('aspect-ratio')>-1||(divs[j].style&&divs[j].style.aspectRatio)){ph=divs[j];break}}
+if(!ph)continue;
+ph.setAttribute('style','aspect-ratio:1/1!important;width:100%!important;height:auto!important;border-radius:25px!important;overflow:hidden!important;background:linear-gradient(160deg,#0b4a66,#04141d)!important;display:block!important;margin:0!important;padding:0!important');
+var im=ph.querySelector('img');
+if(!im){
+im=document.createElement('img');
+im.decoding='async';
+ph.innerHTML='';
+ph.appendChild(im);
+im.src=KC;
+im.alt='Ketoclean Anti-Dandruff Shampoo';
+}
+if(i===0){
+im.src=KC;
+im.setAttribute('style','width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;display:block!important;border-radius:0!important');
+}else{
+im.setAttribute('style','width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important;border-radius:0!important');
+}
+}
+return true
+}
+var t=[0,300,800,1500,2500,4000,6000,8000,11000,15000];
+for(var k=0;k<t.length;k++)setTimeout(final,t[k]);
+setInterval(final,3000);
+window.addEventListener('load',final);
+})();
+</script><script id="rebuild-futgrid">
+(function(){
+var CARD='background:var(--gl-bg);border:1px solid var(--gl-bd);box-shadow:var(--gl-sh);border-radius:32px;padding:8px;position:relative';
+var BADGE='position:absolute;top:17px;left:17px;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)';
+var PH='aspect-ratio:1/1;border-radius:25px;overflow:hidden;background:linear-gradient(160deg,#0b4a66,#04141d)';
+var IM='width:100%;height:100%;object-fit:cover;object-position:center;display:block';
+var items=[
+['Ketoclean Anti-Dandruff Shampoo','Anti-Dandruff · 50ml & 200ml','Clean scalp, healthier hair · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/12953c45.webp'],
+['Ketoclean Conditioner','Nourishes & smooths · 100ml & 200ml','মসৃণ ও পুষ্ট চুল · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/fbde07d3.webp'],
+['Ketoclean Scalp Scrub','Deep cleanse & detox · 100ml','গভীর পরিষ্কার · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/2266f747.webp'],
+['Ketoclean Scalp Tonic','Refreshes & soothes · 100ml','স্ক্যাল্পকে সজীব করে · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/84eb1706.webp'],
+['HydraGlow Face Wash','Deep cleanse & fresh glow · 100ml','ত্বক পরিষ্কার ও সজীব · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/7d8b9d3e.webp'],
+['SoftCare Body Lotion','24hr smooth & soft skin · 250ml','মসৃণ ও কোমল ত্বক · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/103d5806.webp'],
+['FreshMint Toothpaste','Long-lasting fresh breath · 120g','টাটকা নিঃশ্বাস · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/828c8405.webp'],
+['PureHands Hand Wash','Gentle yet effective clean · 250ml','হাত পরিষ্কার ও সুরক্ষা · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/9b53158e.webp']
+];
+function build(){
+var g=document.createElement('div');
+g.id='futGrid2';
+g.setAttribute('style','display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px');
+items.forEach(function(it){
+var d=document.createElement('div');
+d.setAttribute('style',CARD);
+d.innerHTML='<span style="'+BADGE+'">Coming soon</span>'+
+'<div style="'+PH+'"><img src="'+it[3]+'" alt="'+it[0]+'" loading="lazy" decoding="async" style="'+IM+'"></div>'+
+'<div style="padding:14px 12px;text-align:center"><b style="display:block;font:600 21px Cormorant Garamond,serif;color:var(--ink)">'+it[0]+'</b><span style="display:block;color:var(--soft);font-size:14px;margin-top:3px">'+it[1]+'</span><i style="display:block;font-style:normal;font:500 12px Hind Siliguri,sans-serif;color:var(--mute3);margin-top:8px">'+it[2]+'</i></div>';
+g.appendChild(d);
+});
+return g;
+}
+function replace(){
+var old=document.getElementById('futGrid');
+if(!old||!old.parentNode)return false;
+old.parentNode.replaceChild(build(),old);
+return true;
+}
+var t=[0,100,300,800,1500,3000];
+for(var i=0;i<t.length;i++)setTimeout(replace,t[i]);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){replace();setTimeout(replace,500);setTimeout(replace,2000)});
+window.addEventListener('load',function(){setTimeout(replace,300);setTimeout(replace,1500)});
+})();
+</script><style id="fut-modal-css">
+#futModalOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(4,14,22,.78);backdrop-filter:blur(8px);opacity:0;transition:opacity .3s ease}
+#futModalOverlay.fmOpen{display:flex;opacity:1}
+#futModal{width:min(880px,96vw);max-height:92vh;overflow-y:auto;background:var(--gl-bg,#fff);border:1px solid var(--gl-bd,#ccc);box-shadow:var(--gl-sh,0 30px 70px rgba(0,0,0,.45));border-radius:34px;position:relative;transform:translateY(34px) scale(.96);opacity:0;transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .4s ease}
+#futModalOverlay.fmOpen #futModal{transform:translateY(0) scale(1);opacity:1}
+#futModal .fmClose{position:absolute;top:14px;right:16px;z-index:5;width:38px;height:38px;border-radius:50%;border:1px solid var(--gl-bd,#ccc);background:var(--gl-bg,#fff);color:var(--ink,#111);font:600 17px/38px 'Hind Siliguri',sans-serif;text-align:center;cursor:pointer;transition:transform .2s ease,background .2s ease}
+#futModal .fmClose:hover{transform:rotate(90deg) scale(1.08)}
+#futModal .fmBanner{width:100%;aspect-ratio:16/8;border-radius:34px 34px 0 0;overflow:hidden;background:linear-gradient(160deg,#0b4a66,#04141d);margin:0}
+#futModal .fmBanner img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.02);transition:transform 1s ease}
+#futModalOverlay.fmOpen .fmBanner img{transform:scale(1.1)}
+#futModal .fmBody{padding:26px 28px 30px}
+#futModal .fmTag{display:inline-block;padding:5px 13px;border-radius:999px;font:600 11px 'Hind Siliguri',sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35);margin-bottom:10px}
+#futModal h3{font:600 30px 'Cormorant Garamond',serif;color:var(--ink,#111);margin:0 0 6px}
+#futModal .fmSize{color:var(--soft,#555);font-size:15px;margin:0 0 14px}
+#futModal .fmDesc{color:var(--soft,#555);font-size:16px;line-height:1.7;margin:0 0 16px}
+#futModal .fmPoints{list-style:none;padding:0;margin:0 0 16px}
+#futModal .fmPoints li{color:var(--ink,#111);font:500 14.5px 'Hind Siliguri',sans-serif;padding:7px 0 7px 26px;position:relative;border-bottom:1px dashed var(--gl-bd,#e5e5e5)}
+#futModal .fmPoints li::before{content:'✓';position:absolute;left:2px;color:#4fd37a;font-weight:700}
+#futModal .fmSoon{font:600 14px 'Hind Siliguri',sans-serif;color:var(--mute3,#888);text-align:center;padding:10px;border-radius:14px;background:rgba(37,211,102,.07);border:1px dashed rgba(79,211,122,.4)}
+#futModal .fmAnim{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+#futModalOverlay.fmOpen .fmAnim{opacity:1;transform:translateY(0)}
+#futGrid2>div{cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+#futGrid2>div:hover{transform:translateY(-6px) scale(1.02)}
+</style>
+<script id="fut-modal-js">
+(function(){
+var D={
+'Ketoclean Anti-Dandruff Shampoo':{s:'50ml & 200ml',d:'কেটোক্লিন অ্যান্টি-ড্যান্ড্রাফ শ্যাম্পু — ড্যান্ড্রাফ ও স্ক্যাল্পের চুলকানি কমাতে সবচেয়ে কার্যকর ফর্মুলা। নিয়মিত ব্যবহারে চুল পড়া কমে এবং স্ক্যাল্প থাকে তাজা।',p:['ড্যান্ড্রাফ ও খুসকি কমায়','স্ক্যাল্পের চুলকানি দূর করে','চুলকে টাটকা ও পরিষ্কার রাখে','স্যালিসাইলিক অ্যাসিড সমৃদ্ধ ফর্মুলা']},
+'Ketoclean Conditioner':{s:'100ml & 200ml',d:'কেটোক্লিন কন্ডিশনার — শ্যাম্পুর পরে ব্যবহার করলে চুল হয় মসৃণ, কোমল ও সহজেই আচরণযোগ্য। প্রতিটি ধারায় পুষ্টি জোগায়।',p:['চুলকে মসৃণ ও কোমল করে','জট ছাড়াতে সাহায্য করে','চুলে প্রাকৃতিক উজ্জ্বলতা ফেরায়','হালকা ও নন-গ্রিজি ফিনিশ']},
+'Ketoclean Scalp Scrub':{s:'100ml',d:'কেটোক্লিন স্ক্যাল্প স্ক্রাব — সপ্তাহে ১-২ বার ব্যবহারে স্ক্যাল্পের মৃত কোষ ও জমে থাকা অতিরিক্ত তেল দূর হয়, ফলিকল পরিষ্কার থাকে।',p:['গভীর পরিষ্কার ও ডিটক্স','মৃত কোষ দূর করে','স্ক্যাল্পে রক্ত চলাচল বাড়ায়','সপ্তাহে ১-২ বার ব্যবহারের জন্য']},
+'Ketoclean Scalp Tonic':{s:'100ml',d:'কেটোক্লিন স্ক্যাল্প টনিক — প্রতিদিন ব্যবহারযোগ্য লাইটওয়েট টনিক যা স্ক্যাল্পকে সজীব রাখে এবং চুলের গোড়া শক্ত করে।',p:['স্ক্যাল্পকে সজীব ও শান্ত করে','চুলের গোড়া শক্ত করে','অয়েলি ভাব ছাড়াই হালকা','প্রতিদিন ব্যবহারযোগ্য']},
+'HydraGlow Face Wash':{s:'100ml',d:'হাইড্রাগ্লো ফেস ওয়াশ — মৃদু ফর্মুলা যা ময়লা ও অতিরিক্ত তেল দূর করে ত্বককে রাখে পরিষ্কার, সজীব ও হাইড্রেটেড।',p:['গভীরভাবে ময়লা দূর করে','ত্বক টাটকা ও উজ্জ্বল করে','শুষ্কতা ছাড়াই পরিষ্কার','সব স্কিন টাইপের জন্য উপযুক্ত']},
+'SoftCare Body Lotion':{s:'250ml',d:'সফটকেয়ার বডি লোশন — দিনে একবার ব্যবহারে ২৪ ঘণ্টা মসৃণ ও কোমল ত্বক। দ্রুত শুষে যায়, চিটচিটে ভাব নেই।',p:['২৪ ঘণ্টা মসৃণ ত্বক','দ্রুত শুষে যায়, নন-স্টিকি','ত্বককে নরম ও পুষ্ট করে','সব ঋতুতে ব্যবহারযোগ্য']},
+'FreshMint Toothpaste':{s:'120g',d:'ফ্রেশমিন্ট টুথপেস্ট — শক্তিশালী মিন্ট ফর্মুলা যা সারাদিন টাটকা নিঃশ্বাস রাখে এবং দাঁতকে রাখে সুরক্ষিত।',p:['দীর্ঘস্থায়ী টাটকা নিঃশ্বাস','দাঁত ও মাড়ির যত্ন নেয়','মিন্টি ফ্রেশ টেস্ট','সারাদিন আত্মবিশ্বাস দেয়']},
+'PureHands Hand Wash':{s:'250ml',d:'পিওরহ্যান্ডস হ্যান্ড ওয়াশ — মৃদু অথচ কার্যকর ফর্মুলা যা হাত থেকে ৯৯.৯% জীবাণু দূর করে, তবু ত্বক শুষ্ক করে না।',p:['৯৯.৯% জীবাণু দূর করে','ত্বককে শুষ্ক করে না','মৃদু ও পরিবার-বান্ধব ফর্মুলা','সুন্দর ফ্রেগ্রেন্স']}
+};
+function close(){var o=document.getElementById('futModalOverlay');if(o){o.classList.remove('fmOpen');setTimeout(function(){if(o)o.style.display='none'},310)}document.body.style.overflow=''}
+function open(name,img){
+var x=D[name]||{s:'',d:'শীঘ্রই আসছে।',p:[]};
+var o=document.getElementById('futModalOverlay');if(!o)return;
+o.querySelectorAll('.fmName')[0].textContent=name;
+o.querySelectorAll('.fmSize')[0].textContent=x.s;o.querySelectorAll('.fmDesc')[0].textContent=x.d;
+o.querySelectorAll('.fmBannerImg')[0].src=img;
+var ul=o.querySelectorAll('.fmPoints')[0];ul.innerHTML='';x.p.forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li)});
+var st=o.querySelectorAll('.fmAnim');for(var i=0;i<st.length;i++)st[i].style.transitionDelay=(0.15+i*0.12)+'s';
+o.style.display='flex';requestAnimationFrame(function(){o.classList.add('fmOpen')});
+document.body.style.overflow='hidden';
+}
+document.addEventListener('click',function(e){
+if(e.target.closest&&e.target.closest('#futModalOverlay')&&e.target.classList.contains('fmBack')){close();return}
+if(e.target.closest&&e.target.closest('.fmClose')){e.preventDefault();close();return}
+var card=e.target.closest?e.target.closest('#futGrid2>div'):null;
+if(!card)return;
+var b=card.querySelector('b');if(!b)return;
+var img=card.querySelector('img');
+open(b.textContent.trim(),img?img.getAttribute('src'):'');
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+(function ensure(){
+if(document.getElementById('futModalOverlay'))return;
+var ov=document.createElement('div');ov.id='futModalOverlay';ov.className='fmBack';ov.style.display='none';
+ov.innerHTML='<div id="futModal" class="fmBack"><button class="fmClose fmBack" aria-label="বন্ধ">✕</button>'+
+'<div class="fmBanner"><img class="fmBannerImg" src="" alt=""></div>'+
+'<div class="fmBody"><span class="fmTag fmAnim">Coming soon · শীঘ্রই আসছে</span>'+
+'<h3 class="fmName fmAnim"></h3><p class="fmSize fmAnim"></p>'+
+'<p class="fmDesc fmAnim"></p><ul class="fmPoints fmAnim"></ul>'+
+'<div class="fmSoon fmAnim">এই প্রোডাক্টটি খুব শীঘ্রই ATM Cosmetics-এ চলে আসছে 🌿</div></div>';
+document.body.appendChild(ov);
+setTimeout(ensure,1500);
+})();
+})();
+</script><style id="fut-modal-fullphoto-fix">
+#futModal .fmBanner{aspect-ratio:16/10!important;background:linear-gradient(160deg,#0b4a66,#04141d)!important;border-radius:34px 34px 0 0!important}
+#futModal .fmBanner img{object-fit:contain!important;transform:none!important;padding:10px 0!important}
+#futModalOverlay.fmOpen .fmBanner img{transform:none!important}
+</style><style id="kc-logo-crop">
+#futGrid2>div:nth-child(-n+4) img{width:100%!important;height:auto!important;object-fit:cover!important;object-position:top center!important;margin-bottom:-11%!important;display:block!important}
+#futModal .fmBanner{position:relative!important}
+#futModal .fmBanner img.fmKc{position:absolute!important;top:0!important;left:50%!important;transform:translateX(-50%)!important;width:auto!important;max-width:none!important;height:112%!important;object-fit:cover!important;object-position:top center!important;margin:0!important;padding:0!important}
+</style>
+<script id="kc-logo-crop-js">
+(function(){
+var K=['12953c45','fbde07d3','2266f747','84eb1706'];
+function fix(){
+var m=document.querySelector('#futModal .fmBanner img');
+if(!m)return;
+var s=m.getAttribute('src')||'';
+var kc=false;
+for(var i=0;i<K.length;i++){if(s.indexOf(K[i])>-1){kc=true;break}}
+if(kc)m.classList.add('fmKc');else m.classList.remove('fmKc');
+}
+setInterval(fix,200);
+document.addEventListener('click',function(){setTimeout(fix,50);setTimeout(fix,300)});
+})();
+</script><style id="kc-logo-crop-v2">
+#futGrid2>div:nth-child(-n+4) img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important;margin:0!important;clip-path:inset(0 0 11.5% 0)!important}
+</style><style id="kc-logo-crop-v3">
+#futGrid2>div:nth-child(-n+4) div[style*="aspect-ratio"]{position:relative!important}
+#futGrid2>div:nth-child(-n+4) div[style*="aspect-ratio"] img{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:113.5%!important;max-width:none!important;object-fit:cover!important;object-position:top center!important;display:block!important;margin:0!important;padding:0!important;clip-path:none!important}
+</style><script id="ing-imgs-hd">
+(function(){
+var MAP={
+'Kojic Acid':'https://d3p662obnq9uz2.cloudfront.net/generated-images/5794724c.webp',
+'Niacinamide':'https://d3p662obnq9uz2.cloudfront.net/generated-images/380e446e.webp',
+'Salicylic Acid':'https://d3p662obnq9uz2.cloudfront.net/generated-images/68be8a90.webp',
+'Aloe Vera':'https://d3p662obnq9uz2.cloudfront.net/generated-images/67166714.webp',
+'Ketoconazole':'https://d3p662obnq9uz2.cloudfront.net/generated-images/f1cf47d9.webp',
+'Vitamin C & E':'https://d3p662obnq9uz2.cloudfront.net/generated-images/08847443.webp',
+'Lactic Acid':'https://d3p662obnq9uz2.cloudfront.net/generated-images/9c8b624b.webp',
+'Floral Essence':'https://d3p662obnq9uz2.cloudfront.net/generated-images/580ee062.webp'
+};
+function fix(){
+document.querySelectorAll('.ing-card .ing-sw img').forEach(function(im){
+var a=(im.getAttribute('alt')||'').trim();
+if(MAP[a]){im.src=MAP[a];im.setAttribute('loading','eager')}
+});
+var h=document.querySelector('.ing-illus img');
+if(h){h.src='https://d3p662obnq9uz2.cloudfront.net/generated-images/15f9fe4d.webp';h.setAttribute('loading','eager')}
+}
+fix();setTimeout(fix,300);setTimeout(fix,1000);setTimeout(fix,2500);
+window.addEventListener('load',fix);
+})();
+</script><style id="ing-imgs-fullfix">
+.ing-sw{background:#fff!important}
+.ing-sw img{object-fit:contain!important;padding:6px 4px!important}
+.ing-illus{background:#fff!important}
+.ing-illus img{object-fit:contain!important}
+</style><style id="ing-imgs-bigfix">
+.ing-sw{height:210px!important}
+.ing-sw img{object-fit:contain!important;padding:2px!important}
+.ing-illus{background:#fff!important}
+.ing-illus img{object-fit:contain!important;max-height:360px!important}
+</style><style id="ing-imgs-roundfix">
+.ing-sw{border-radius:22px!important;overflow:hidden!important}
+.ing-illus{border-radius:26px!important;overflow:hidden!important}
+</style><style id="ing-imgs-biggerfix2">
+.ing-sw{height:280px!important}
+.ing-sw img{padding:0!important}
+.ing-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+.ing-illus img{max-height:420px!important}
+</style><style id="ing-imgs-sidepad">
+.ing-sw img{padding:0 14px!important;box-sizing:border-box!important}
+.ing-illus img{padding:0 10px!important;box-sizing:border-box!important}
+</style><style id="ing-imgs-widerfix">
+.ing-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))!important;gap:26px!important}
+.ing-sw{height:300px!important}
+.ing-sw img{padding:0!important}
+.ing-illus img{padding:0!important}
+</style><style id="ing-imgs-widerfix2">
+.ing-grid{grid-template-columns:repeat(auto-fill,minmax(480px,1fr))!important}
+.ing-sw{height:340px!important}
+.ing-sw img{padding:0!important}
+.ing-illus img{padding:0!important;max-height:460px!important}
+</style><style id="ing-imgs-final-size">
+.ing-grid{grid-template-columns:repeat(2,1fr)!important}
+.ing-sw{height:auto!important;aspect-ratio:1/1!important}
+.ing-sw img{padding:0!important;object-fit:contain!important;height:100%!important;width:100%!important}
+@media(max-width:820px){.ing-grid{grid-template-columns:1fr!important}}
+</style><style id="ing-more-hide">
+.ing-more{display:none!important}
+</style><style id="ing-imgs-watermark-hide">
+.ing-sw{aspect-ratio:1/0.88!important}
+.ing-sw img{object-fit:cover!important;object-position:top center!important}
+</style><style id="ing-glass-section">
+#ing{position:relative;padding:90px 0}
+#ing::before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;z-index:0}
+#ing::before{filter:saturate(1.05)}
+#ing .ing-tools,#ing h2,#ing .ing-grid,#ing .ing-foot,#ing .kicker,#ing .ing-lead{position:relative;z-index:1}
+#ing::before{opacity:1}
+#ing h2,#ing .kicker{color:#fff!important}
+#ing .ing-lead{color:rgba(255,255,255,.75)!important}
+.ing-grid{grid-template-columns:repeat(4,1fr)!important;gap:18px!important}
+@media(max-width:1100px){.ing-grid{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:620px){.ing-grid{grid-template-columns:1fr!important}}
+.ing-card{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.35)!important;border-radius:18px!important;padding:20px!important;backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:0 18px 40px -20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25)!important}
+.ing-card b{color:#fff!important;font-family:"Hind Siliguri",sans-serif!important;font-weight:600!important;font-size:17px!important}
+.ing-card p{color:rgba(255,255,255,.8)!important}
+.ing-card span{background:rgba(207,169,79,.18)!important;color:#e8cd7f!important;border:1px solid rgba(207,169,79,.45)}
+.ing-sw{display:none!important}
+</style><style id="ing-revert-about-glass">/* ingredient section ager motoy revert */
+#ing::before{display:none!important}
+#ing{padding:70px 0!important}
+#ing h2{color:#0d2b1c!important}
+#ing .kicker{color:#1f8a56!important}
+.ing-lead,.ing-sec .sub{color:#4c6b5a!important}
+.ing-grid{grid-template-columns:repeat(2,1fr)!important;gap:26px!important}
+@media(max-width:820px){.ing-grid{grid-template-columns:1fr!important}}
+.ing-card{background:#fff!important;border:1px solid #e1ece4!important;border-radius:14px!important;box-shadow:0 10px 26px -18px rgba(13,43,28,.25)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:22px!important}
+.ing-card b{color:#0d2b1c!important;font:600 20px "Cormorant Garamond",serif!important}
+.ing-card p{color:#52705f!important}
+.ing-card span{background:rgba(31,138,86,.1)!important;color:#1f8a56!important;border:0!important}
+.ing-sw{display:block!important;height:auto!important;aspect-ratio:1/0.88!important}
+.ing-sw img{object-fit:cover!important;object-position:top center!important;padding:0!important;width:100%!important;height:100%!important}
+/* about section: photo er moto glassmorphism */
+#about{position:relative}
+#about::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(2,12,18,.6),rgba(2,12,18,.78)),url('https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat}
+#about .wrap{position:relative;z-index:1}
+.story-vals>div{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.35)!important;border-radius:18px!important;backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.story-vals i{display:flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;margin:0 0 14px;font-size:0!important;background-position:center;background-size:26px;background-repeat:no-repeat}
+.story-vals>div:nth-child(1) i{background-color:rgba(31,138,86,.92);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z'/><path d='M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12'/></svg>");box-shadow:0 0 0 1px rgba(232,205,127,.6)}
+.story-vals>div:nth-child(2) i{background-color:rgba(207,169,79,.92);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M10 2v6L4.5 18a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2'/><path d='M8.5 2h7'/><path d='M7 16h10'/></svg>");box-shadow:0 0 0 1px rgba(255,255,255,.55)}
+.story-vals>div:nth-child(3) i{background-color:rgba(31,138,86,.92);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");box-shadow:0 0 0 1px rgba(255,255,255,.55)}
+.story-vals>div:nth-child(4) i{background-color:rgba(207,169,79,.92);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z'/></svg>");box-shadow:0 0 0 1px rgba(255,255,255,.55)}
+.story-vals>div b{color:#fff}
+.purpose{backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(255,255,255,.25)!important;border-radius:22px!important}
+</style><style id="about-glass-final">/* === About section: photo er motoy full dark lab background === */
+#about{padding:130px 0 110px!important}
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.92) 0%,rgba(2,12,18,.72) 45%,rgba(2,12,18,.55) 100%),url('https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat!important}
+#about .wrap{position:relative;z-index:1}
+/* hero text block - left side, white on dark */
+#about .story{align-items:start;gap:40px}
+#about .story h2{color:#fff!important}
+#about .story h2 em{color:#e8cd7f!important;font-style:normal}
+#about .about-pill{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
+#about .story .mark{color:#cfa94f!important;opacity:.3!important}
+#about .story p{color:rgba(255,255,255,.75)!important}
+#about .story .bn{color:rgba(255,255,255,.55)!important}
+#about .story-cta .btn{background:rgba(255,255,255,.06)!important;border:1px solid rgba(232,205,127,.6)!important;color:#fff!important;box-shadow:0 0 18px rgba(232,205,127,.15)!important}
+.story-photo{display:none!important}
+/* 4 value cards - frosted glass, icons top-left */
+.story-vals{gap:24px!important;margin-top:70px!important}
+.story-vals>div{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.32)!important;border-radius:22px!important;padding:30px 32px!important;backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 50px -24px rgba(0,0,0,.5)!important;transition:transform .3s,border-color .3s}
+.story-vals>div:hover{transform:translateY(-5px);border-color:rgba(232,205,127,.55)!important}
+.story-vals>div b{color:#fff!important;font-size:17px!important;font-family:"Hind Siliguri",sans-serif!important;font-weight:600!important}
+.story-vals>div p{color:rgba(255,255,255,.7)!important;font-size:14px!important;line-height:1.55!important}
+/* purpose banner - wide frosted glass */
+.purpose{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.32)!important;border-radius:28px!important;padding:32px!important;display:flex;gap:32px;align-items:center;backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 50px -24px rgba(0,0,0,.5)!important}
+.purpose .kicker{color:#e8cd7f!important;letter-spacing:3px!important}
+.purpose h3{color:#fff!important}
+.purpose h3 em{color:#e8cd7f!important;font-style:normal}
+.purpose p{color:rgba(255,255,255,.72)!important}
+.purpose .bn{color:rgba(255,255,255,.5)!important}
+.purpose-img{width:180px!important;height:180px!important;border-radius:18px!important;object-fit:cover}
+.purpose-row .btn{background:rgba(2,12,18,.55)!important;border:1px solid rgba(197,168,128,.85)!important;color:#fff!important;box-shadow:0 0 18px rgba(197,168,128,.25)!important}
+@media(max-width:820px){.purpose{flex-direction:column;align-items:flex-start;gap:20px}.purpose-img{width:100%!important;height:170px!important}}
+</style><style id="about-redesign">
+#about{background:radial-gradient(ellipse at 70% 0%,#0d2d22 0%,#061a14 60%,#020c12 100%);overflow:hidden}
+#about .story{align-items:stretch!important}
+#about .story>div:first-child{display:flex;flex-direction:column;justify-content:center}
+#about .about-pill{border:1px solid rgba(255,255,255,.35)!important;background:rgba(255,255,255,.06)!important;color:#fff!important;backdrop-filter:blur(8px);margin-bottom:20px!important;align-self:flex-start!important}
+#about .mark{display:none}
+#about h2.kt{font-size:clamp(40px,5.4vw,72px)!important;line-height:1.05!important;letter-spacing:-.01em!important;color:#fff!important;font-family:"Inter","Hind Siliguri",system-ui,sans-serif!important;font-weight:800!important;margin:0 0 18px!important}
+#about h2.kt em{background:linear-gradient(120deg,#dfba73,#c59b4f)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#c59b4f!important;font-style:normal!important}
+#about .story p:not(.bn){color:#cbd5e1!important;max-width:56ch;font-size:16.5px!important;line-height:1.75!important;margin:0 0 10px!important}
+#about .bn{color:rgba(255,255,255,.55)!important}
+#about .story-cta{margin-top:22px!important;display:flex!important;align-items:center;gap:20px;flex-wrap:wrap}
+#about .story-cta .btn{background:linear-gradient(120deg,#dfba73,#c59b4f)!important;color:#26210f!important;font:700 15px "Inter","Hind Siliguri",sans-serif!important;padding:13px 26px!important;box-shadow:0 12px 30px -10px rgba(207,155,79,.55)!important;border:0!important}
+#about .story-cta .btn:hover{transform:translateY(-3px);filter:brightness(1.06)}
+#about .vid-cta{display:inline-flex;align-items:center;gap:13px;text-decoration:none}
+#about .vid-cta .vc{width:52px;height:52px;border-radius:50%;background:linear-gradient(160deg,#123b2c,#061a14);border:1px solid #c59b4f;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 20px rgba(207,155,79,.3);transition:transform .3s}
+#about .vid-cta:hover .vc{transform:scale(1.07)}
+#about .vid-cta .vc svg{width:16px;height:16px;fill:#fff}
+#about .vid-cta b{display:block;color:#fff!important;font:700 15px "Inter","Hind Siliguri",sans-serif!important;line-height:1.2!important}
+#about .vid-cta span{display:block;color:#94a3b8!important;font:500 12px "Inter","Hind Siliguri",sans-serif!important;margin-top:2px}
+#about .story-photo{min-height:460px!important;max-height:520px;box-shadow:0 34px 70px -24px rgba(0,0,0,.7),0 0 0 1px rgba(223,186,115,.25)!important;border-radius:22px!important}
+#about .sp-cap{padding:80px 24px 20px;font:500 15px/1.5 "Inter","Hind Siliguri",sans-serif;color:rgba(255,255,255,.88)!important;background:linear-gradient(to top,rgba(4,16,12,.92),transparent)}
+#about .sp-cap .bn{color:rgba(255,255,255,.55)!important}
+#about .ab-side{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 10px "Inter",sans-serif;letter-spacing:4px;color:rgba(255,255,255,.28);z-index:1;pointer-events:none}
+#about .story-vals{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px!important}
+#about .story-vals>div{background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:20px!important;padding:24px!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 18px 40px -22px rgba(0,0,0,.6)!important;transition:transform .3s,border-color .3s;display:block!important}
+#about .story-vals>div:hover{transform:translateY(-5px);border-color:rgba(223,186,115,.45)!important}
+#about .story-vals>div>i{width:46px;height:46px;border-radius:50%;background:linear-gradient(150deg,#1f8a56,#0d5a36);border:1px solid rgba(255,255,255,.28);display:flex!important;align-items:center;justify-content:center;margin:0 0 14px!important;font:0/46px "Inter",sans-serif!important;color:transparent!important;overflow:hidden;position:relative}
+#about .story-vals>div>i::after{content:"";position:absolute;inset:0;background-color:#fff;opacity:.95;mask:var(--sv-ic) center/22px no-repeat;-webkit-mask:var(--sv-ic) center/22px no-repeat}
+#about .story-vals>div:nth-child(1)>i{--sv-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z'/%3E%3Cpath d='M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12'/%3E%3C/svg%3E")}
+#about .story-vals>div:nth-child(2)>i{--sv-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6M10 3v6L4.6 18a2 2 0 001.8 3h11.2a2 2 0 001.8-3L14 9V3'/%3E%3Cpath d='M7 15h10'/%3E%3C/svg%3E")}
+#about .story-vals>div:nth-child(3)>i{--sv-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='7' r='3.2'/%3E%3Cpath d='M3 21c0-3 2-5 6-5s6 2 6 5'/%3E%3Ccircle cx='17.5' cy='9' r='2.6'/%3E%3Cpath d='M14.5 21c0-2.4 1.2-4 3-4s3 1.6 3 4'/%3E%3C/svg%3E")}
+#about .story-vals>div:nth-child(4)>i{--sv-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0112 8a4.5 4.5 0 017.5 2.5c0 5.3-7.5 10-7.5 10z'/%3E%3C/svg%3E")}
+#about .story-vals>div b{color:#fff!important;font:700 17px "Inter","Hind Siliguri",sans-serif!important;margin-bottom:7px!important;display:block!important}
+#about .story-vals>div p{color:rgba(255,255,255,.68)!important;font:400 13.5px/1.6 "Inter","Hind Siliguri",sans-serif!important;margin:0!important}
+#about .purpose{margin-top:34px!important;border-radius:24px!important;padding:30px 32px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.16)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px}
+#about .purpose .kicker{color:#dfba73!important;letter-spacing:3px!important;font:700 12px "Inter",sans-serif!important;display:inline-block;padding-bottom:9px;border-bottom:1px solid rgba(223,186,115,.55)}
+#about .purpose h3{color:#fff!important;font:600 clamp(22px,2.6vw,32px)/1.25 "Inter","Hind Siliguri",sans-serif!important;margin:10px 0 0!important}
+#about .purpose-text>p,#about .purpose-text .purpose-row p{color:rgba(255,255,255,.7)!important}
+#about .purpose-row{margin-top:12px!important}
+#about .purpose .btn{background:transparent!important;border:1px solid rgba(223,186,115,.8)!important;color:#dfba73!important;font:700 14px "Inter","Hind Siliguri",sans-serif!important;box-shadow:none!important}
+#about .purpose .btn:hover{background:rgba(223,186,115,.12);transform:translateY(-3px)}
+@media(max-width:820px){#about .story-vals{grid-template-columns:1fr 1fr}#about .purpose{grid-template-columns:1fr}#about .ab-side{display:none}#about .story-photo{min-height:300px!important}}
+@media(max-width:560px){#about .story-vals{grid-template-columns:1fr}#about .purpose{padding:22px}}
+</style>
+<script>
+(function(){
+var LAB='https://d3p662obnq9uz2.cloudfront.net/generated-images/5b5f426d.webp';
+var LEAF='https://d3p662obnq9uz2.cloudfront.net/generated-images/16487506.webp';
+function rebuild(){
+var a=document.getElementById('about');if(!a)return false;
+var h=a.querySelector('.story>div:first-child');
+if(h&&h.getAttribute('data-ab-done')!=='1'){
+h.setAttribute('data-ab-done','1');
+var h2=h.querySelector('h2');if(h2){h2.innerHTML='Quality Begins <em>with Care.</em>';}
+h.querySelectorAll('p').forEach(function(p){if(!p.classList.contains('bn'))p.remove();});
+var bn=h.querySelector('p.bn');if(bn)bn.textContent='At ATM Cosmetics & Toiletries, we believe everyday care can make a meaningful difference. We create thoughtfully formulated personal care products that fit into real lives — helping people look good, feel good and care with confidence.';
+var cta=h.querySelector('.story-cta');
+if(cta){cta.innerHTML='<a class="btn" href="#packaging">Our journey →</a><a class="vid-cta" href="#why"><span class="vc"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></span><span class="vt"><b>Watch our story</b><span>1:28 min</span></span></a>';}
+}
+var ph=a.querySelector('.story-photo');
+if(ph){
+if(!ph.querySelector('.ab-side')){ph.insertAdjacentHTML('beforeend','<span class="ab-side">CARE · SCIENCE · PEOPLE · BEAUTIFUL TOMORROWS</span>');}
+var im=ph.querySelector('img');if(im)im.src=LAB;
+var cap=ph.querySelector('.sp-cap');
+if(cap)cap.innerHTML='Quality begins with care — from the first wash in the morning to the last cream at night.';
+}
+var pp=a.querySelector('.purpose');
+if(pp){var pi=pp.querySelector('img');if(pi)pi.src=LEAF;}
+return true;
+}
+var ts=[0,200,600,1200,2500,4000];
+for(var i=0;i<ts.length;i++)setTimeout(rebuild,ts[i]);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){rebuild();setTimeout(rebuild,400)});else rebuild();
+window.addEventListener('load',function(){setTimeout(rebuild,300)});
+})();
+</script><style id="about-clone-v2">
+#about{background:radial-gradient(ellipse at 78% -12%,#12402f 0%,#0a231a 42%,#020c12 100%)!important;padding:130px 0 110px!important;overflow:hidden!important;position:relative}
+#about *{box-sizing:border-box}
+.ab-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+.ab-badge{display:inline-block;padding:9px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.07);color:#fff;font:600 13px "Inter","Hind Siliguri",sans-serif;letter-spacing:.02em;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-self:flex-start}
+.ab-title{font:800 clamp(42px,5.8vw,82px)/1.05 "Inter","Hind Siliguri",system-ui,sans-serif!important;color:#fff!important;margin:24px 0 18px!important;letter-spacing:-.02em;font-family:"Inter","Hind Siliguri",sans-serif!important;text-transform:none!important}
+.ab-title em{background:linear-gradient(115deg,#e8cd7f 0%,#dfba73 40%,#c59b4f 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:normal!important;color:#dfba73!important}
+.ab-desc{color:#cbd5e1!important;font:400 17px/1.85 "Inter","Hind Siliguri",sans-serif!important;max-width:52ch;margin:0 0 8px!important}
+.ab-bn{color:rgba(255,255,255,.5)!important;font:400 15px/1.8 "Hind Siliguri",sans-serif!important;margin:0 0 28px!important}
+.ab-ctas{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.ab-btn{display:inline-flex;align-items:center;gap:8px;padding:15px 30px;border-radius:999px;text-decoration:none!important;background:linear-gradient(115deg,#e8cd7f,#c59b4f)!important;color:#26210f!important;font:700 15px "Inter","Hind Siliguri",sans-serif!important;box-shadow:0 14px 34px -12px rgba(207,155,79,.6)!important;border:0!important;transition:transform .3s,box-shadow .3s}
+.ab-btn:hover{transform:translateY(-3px);box-shadow:0 20px 44px -12px rgba(207,155,79,.75)!important}
+.ab-vid{display:inline-flex;align-items:center;gap:14px;text-decoration:none!important}
+.ab-vid .vc{width:54px;height:54px;border-radius:50%;background:linear-gradient(160deg,#14382a,#061a14);border:1.5px solid #c59b4f;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 22px rgba(197,155,79,.35);transition:transform .3s}
+.ab-vid:hover .vc{transform:scale(1.08)}
+.ab-vid .vc svg{width:15px;height:15px;fill:#fff}
+.ab-vid b{display:block;color:#fff!important;font:700 15px "Inter","Hind Siliguri",sans-serif!important;line-height:1.25!important;margin:0!important}
+.ab-vid small{display:block;color:#94a3b8!important;font:500 12px "Inter","Hind Siliguri",sans-serif!important;margin-top:2px!important}
+.ab-imgwrap{position:relative;border-radius:26px;overflow:hidden;min-height:500px;box-shadow:0 40px 80px -28px rgba(0,0,0,.75),0 0 0 1px rgba(223,186,115,.28),0 0 60px -18px rgba(63,174,118,.25)!important}
+.ab-imgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ab-side{position:absolute;right:18px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:700 10px "Inter",sans-serif;letter-spacing:5px;color:rgba(255,255,255,.35);z-index:2;pointer-events:none;text-transform:uppercase}
+.ab-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.ab-card{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.16)!important;border-radius:22px!important;padding:26px!important;backdrop-filter:blur(12px) saturate(1.25);-webkit-backdrop-filter:blur(12px) saturate(1.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 22px 46px -24px rgba(0,0,0,.6)!important;transition:transform .35s,border-color .35s,background .35s}
+.ab-card:hover{transform:translateY(-6px);border-color:rgba(223,186,115,.5)!important;background:rgba(255,255,255,.08)!important}
+.ab-ico{width:50px;height:50px;border-radius:50%;background:linear-gradient(150deg,#2aa268,#0d5a36);border:1px solid rgba(255,255,255,.3);display:flex!important;align-items:center;justify-content:center;margin:0 0 16px!important;box-shadow:0 0 18px rgba(63,174,118,.3)}
+.ab-ico svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ab-card h3{color:#fff!important;font:700 17px "Inter","Hind Siliguri",sans-serif!important;margin:0 0 8px!important;line-height:1.3}
+.ab-card p{color:rgba(255,255,255,.66)!important;font:400 13.5px/1.65 "Inter","Hind Siliguri",sans-serif!important;margin:0!important}
+.ab-purpose{margin-top:24px!important;border-radius:26px!important;padding:32px 36px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.17)!important;backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 26px 54px -26px rgba(0,0,0,.65)!important;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:36px}
+.ab-leaf{width:172px;height:172px;border-radius:58% 42% 45% 55%/48% 62% 38% 52%;overflow:hidden;flex:none;box-shadow:0 16px 36px -14px rgba(0,0,0,.6),0 0 0 1px rgba(223,186,115,.3)}
+.ab-leaf img{width:100%;height:100%;object-fit:cover;display:block}
+.ab-kicker{display:inline-block;color:#dfba73!important;font:700 12px "Inter",sans-serif!important;letter-spacing:4px!important;text-transform:uppercase;padding-bottom:9px;border-bottom:1px solid rgba(223,186,115,.6);margin:0!important}
+.ab-purpose h3{color:#fff!important;font:600 clamp(23px,2.8vw,33px)/1.28 "Inter","Hind Siliguri",sans-serif!important;margin:12px 0 10px!important}
+.ab-purpose p{color:rgba(255,255,255,.72)!important;font:400 15px/1.75 "Inter","Hind Siliguri",sans-serif!important;margin:0!important;max-width:60ch}
+.ab-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;text-decoration:none!important;background:transparent!important;border:1.5px solid rgba(223,186,115,.85)!important;color:#dfba73!important;font:700 14px "Inter","Hind Siliguri",sans-serif!important;box-shadow:none!important;white-space:nowrap;transition:background .3s,transform .3s}
+.ab-ghost:hover{background:rgba(223,186,115,.14)!important;transform:translateY(-3px)}
+@media(max-width:1020px){.ab-hero{grid-template-columns:1fr;gap:36px}.ab-imgwrap{min-height:380px}.ab-cards{grid-template-columns:repeat(2,1fr)}.ab-purpose{grid-template-columns:1fr;gap:22px}.ab-side{display:none}}
+@media(max-width:560px){.ab-cards{grid-template-columns:1fr}.ab-leaf{width:100%;height:150px;border-radius:22px}.ab-ctas{gap:18px}#about{padding:90px 0 80px!important}}
+</style>
+<script id="about-clone-rebuild">
+(function(){
+var LAB='https://d3p662obnq9uz2.cloudfront.net/generated-images/5b5f426d.webp';
+var LEAF='https://d3p662obnq9uz2.cloudfront.net/generated-images/16487506.webp';
+var IC={
+leaf:'<svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>',
+flask:'<svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.6 18a2 2 0 0 0 1.8 3h11.2a2 2 0 0 0 1.8-3L14 9V3"/><path d="M7 15h10"/></svg>',
+people:'<svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3.2"/><path d="M3 21c0-3 2-5 6-5s6 2 6 5"/><circle cx="17.5" cy="9" r="2.6"/><path d="M14.5 21c0-2.4 1.2-4 3-4s3 1.6 3 4"/></svg>',
+heart:'<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7.5 2.5c0 5.3-7.5 10-7.5 10z"/></svg>'};
+var CARDS=[
+[IC.leaf,'People First','We design products for everyday care, keeping real needs at the heart of what we do.'],
+[IC.flask,'Thoughtful Formulation','Our teams work with care to develop effective and enjoyable personal care solutions.'],
+[IC.people,'Everyday Confidence','From skincare to haircare, we create products that support healthier, happier routines.'],
+[IC.heart,'A Brighter Tomorrow','We are committed to making a positive difference through better care, every day.']];
+function rebuild(){
+var a=document.getElementById('about');
+if(!a||a.getAttribute('data-ab2')==='1')return;
+a.setAttribute('data-ab2','1');
+var cards='';
+for(var i=0;i<CARDS.length;i++){cards+='<div class="ab-card"><span class="ab-ico">'+CARDS[i][0]+'</span><h3>'+CARDS[i][1]+'</h3><p>'+CARDS[i][2]+'</p></div>';}
+a.innerHTML='<div class="wrap">'+
+'<div class="ab-hero">'+
+'<div class="ab-text">'+
+'<span class="ab-badge">About ATM Cosmetics &amp; Toiletries</span>'+
+'<h2 class="ab-title">Quality Begins <em>with Care</em></h2>'+
+'<p class="ab-desc">At ATM Cosmetics &amp; Toiletries, we believe everyday care can make a meaningful difference. We create thoughtfully formulated personal care products that fit into real lives &mdash; helping people look good, feel good and care with confidence.</p>'+
+'<p class="ab-bn">আমরা বিশ্বাস করি, প্রতিদিনের যত্নই পারে জীবনে অর্থবহ পরিবর্তন আনতে &mdash; ভালো দেখান, ভালো বোধ করুন।</p>'+
+'<div class="ab-ctas">'+
+'<a class="ab-btn" href="#packaging">Our journey &rarr;</a>'+
+'<a class="ab-vid" href="#why"><span class="vc"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></span><span><b>Watch our story</b><small>1:28 min</small></span></a>'+
+'</div></div>'+
+'<div class="ab-imgwrap"><img src="'+LAB+'" alt="ATM Cosmetics research laboratory" loading="lazy"><span class="ab-side">CARE &middot; SCIENCE &middot; PEOPLE &middot; BEAUTIFUL TOMORROWS</span></div>'+
+'</div>'+
+'<div class="ab-cards">'+cards+'</div>'+
+'<div class="ab-purpose">'+
+'<div class="ab-leaf"><img src="'+LEAF+'" alt="Green leaves with water droplets" loading="lazy"></div>'+
+'<div class="ab-ptext"><span class="ab-kicker">Our purpose</span><h3>Caring for people today, for brighter tomorrows.</h3><p>We continue to innovate and grow, inspired by the simple belief that personal care can help people feel more confident, more comfortable, and more like themselves &mdash; every day.</p></div>'+
+'<a class="ab-ghost" href="#packaging">Discover our story &rarr;</a>'+
+'</div>'+
+'</div>';
+}
+var ts=[0,200,600,1200,2500,4000,7000];
+for(var i=0;i<ts.length;i++)setTimeout(rebuild,ts[i]);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){rebuild();setTimeout(rebuild,500)});else rebuild();
+window.addEventListener('load',function(){setTimeout(rebuild,400)});
+})();
+</script><style id="about-theme-match">
+#about{background:radial-gradient(ellipse at 50% 30%,#0b4a66 0,#052333 42%,transparent 75%),var(--bg)!important}
+#about .ab-title{color:#fff!important}
+#about .ab-title em{background:linear-gradient(115deg,#5fd0ff 0%,#00a0e3 60%,#0086c0 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#00a0e3!important}
+#about .ab-badge{border:1px solid rgba(95,208,255,.4)!important;background:rgba(0,160,227,.08)!important;color:#d6f4ff!important}
+#about .ab-btn{background:linear-gradient(#22b8f7,#0086c0)!important;color:#fff!important;box-shadow:0 0 26px #00a0e366!important}
+#about .ab-btn:hover{box-shadow:0 0 38px #00a0e3aa!important}
+#about .ab-vid .vc{background:linear-gradient(160deg,#0b3a52,#04141d)!important;border:1.5px solid #00a0e3!important;box-shadow:0 0 20px rgba(0,160,227,.35)!important}
+#about .ab-desc{color:#b9d3dd!important}
+#about .ab-bn{color:rgba(233,244,248,.55)!important}
+#about .ab-card{background:rgba(255,255,255,.05)!important;border:1px solid rgba(18,56,74,.9)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 18px 40px -22px rgba(0,0,0,.6)!important}
+#about .ab-card:hover{border-color:#00a0e3!important}
+#about .ab-ico{background:linear-gradient(150deg,#0d8fd6,#03465f)!important;border:1px solid rgba(95,208,255,.35)!important;box-shadow:0 0 18px rgba(0,160,227,.3)!important}
+#about .ab-card h3{color:#fff!important}
+#about .ab-card p{color:rgba(233,244,248,.68)!important}
+#about .ab-purpose{background:rgba(255,255,255,.05)!important;border:1px solid rgba(18,56,74,.9)!important}
+#about .ab-kicker{color:#5fd0ff!important;border-bottom-color:rgba(95,208,255,.6)!important}
+#about .ab-purpose h3{color:#fff!important}
+#about .ab-purpose p{color:rgba(233,244,248,.72)!important}
+#about .ab-ghost{border:1.5px solid rgba(95,208,255,.85)!important;color:#5fd0ff!important}
+#about .ab-ghost:hover{background:rgba(0,160,227,.14)!important}
+#about .ab-imgwrap{box-shadow:0 34px 70px -24px rgba(0,0,0,.75),0 0 0 1px rgba(95,208,255,.25)!important}
+#about .ab-side{color:rgba(214,244,255,.35)!important}
+#about .ab-leaf{box-shadow:0 16px 36px -14px rgba(0,0,0,.6),0 0 0 1px rgba(95,208,255,.25)!important}
+</style><style id="about-remove-vid">#about .ab-vid{display:none!important}</style>
+<script id="about-strip-vid">
+(function(){
+function strip(){var a=document.getElementById('about');if(!a)return;var v=a.querySelector('.ab-vid');if(v&&v.parentNode)v.parentNode.removeChild(v);}
+strip();setTimeout(strip,50);setTimeout(strip,300);setTimeout(strip,800);setTimeout(strip,1600);setTimeout(strip,3000);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){strip();setTimeout(strip,400)});else strip();
+window.addEventListener('load',function(){strip();setTimeout(strip,300)});
+})();
+</script><style id="about-cosmetic-bg">
+#about{background:radial-gradient(ellipse at 78% -12%,#12402f 0%,#0a231a 42%,#061a14 74%,#020c12 100%)!important}
+#about .ab-title em{background:linear-gradient(115deg,#e8cd7f 0%,#dfba73 40%,#c59b4f 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#dfba73!important}
+#about .ab-badge{border:1px solid rgba(223,186,115,.45)!important;background:rgba(223,186,115,.08)!important;color:#f0e3c8!important}
+#about .ab-btn{background:linear-gradient(115deg,#e8cd7f,#c59b4f)!important;color:#26210f!important;box-shadow:0 14px 34px -12px rgba(207,155,79,.6)!important}
+#about .ab-btn:hover{box-shadow:0 20px 44px -12px rgba(207,155,79,.75)!important}
+#about .ab-vid .vc{background:linear-gradient(160deg,#14382a,#061a14)!important;border:1.5px solid #c59b4f!important;box-shadow:0 0 20px rgba(197,155,79,.35)!important}
+#about .ab-desc{color:#cbd5e1!important}
+#about .ab-bn{color:rgba(255,255,255,.5)!important}
+#about .ab-card{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 22px 46px -24px rgba(0,0,0,.6)!important}
+#about .ab-card:hover{border-color:rgba(223,186,115,.5)!important;background:rgba(255,255,255,.08)!important}
+#about .ab-ico{background:linear-gradient(150deg,#2aa268,#0d5a36)!important;border:1px solid rgba(255,255,255,.3)!important;box-shadow:0 0 18px rgba(63,174,118,.3)!important}
+#about .ab-card p{color:rgba(255,255,255,.66)!important}
+#about .ab-purpose{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.17)!important}
+#about .ab-kicker{color:#dfba73!important;border-bottom-color:rgba(223,186,115,.6)!important}
+#about .ab-purpose p{color:rgba(255,255,255,.72)!important}
+#about .ab-ghost{border:1.5px solid rgba(223,186,115,.85)!important;color:#dfba73!important}
+#about .ab-ghost:hover{background:rgba(223,186,115,.14)!important}
+#about .ab-imgwrap{box-shadow:0 40px 80px -28px rgba(0,0,0,.75),0 0 0 1px rgba(223,186,115,.28),0 0 60px -18px rgba(63,174,118,.25)!important}
+#about .ab-side{color:rgba(255,255,255,.35)!important}
+#about .ab-leaf{box-shadow:0 16px 36px -14px rgba(0,0,0,.6),0 0 0 1px rgba(223,186,115,.3)!important}
+</style><style id="about-bg-exact-site">
+#about{background:var(--bg)!important}
+</style><style id="about-photo-bg">
+#about{background:linear-gradient(180deg,rgba(2,12,18,.88) 0%,rgba(2,12,18,.94) 100%),url("https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat!important}
+</style><style id="about-photo-bg-2">
+#about{background:linear-gradient(180deg,rgba(2,12,18,.86) 0%,rgba(2,12,18,.93) 100%),url("https://d3p662obnq9uz2.cloudfront.net/generated-images/a9418e81.webp") center/cover no-repeat!important}
+</style><style id="about-site-theme-v2">
+#about{background:radial-gradient(ellipse at 78% -12%,#0b4a66 0%,#052333 45%,#020c12 100%)!important}
+#about .ab-title em{background:linear-gradient(115deg,#5fd0ff 0%,#00a0e3 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#00a0e3!important}
+#about .ab-badge{border:1px solid rgba(0,160,227,.5)!important;background:rgba(0,160,227,.08)!important;color:#bfeaff!important}
+#about .ab-btn{background:linear-gradient(115deg,#5fd0ff,#00a0e3)!important;color:#02131e!important;box-shadow:0 14px 34px -12px rgba(0,160,227,.55)!important}
+#about .ab-btn:hover{box-shadow:0 20px 44px -12px rgba(0,160,227,.7)!important}
+#about .ab-desc{color:#cbd5e1!important}
+#about .ab-bn{color:rgba(255,255,255,.5)!important}
+#about .ab-card{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 22px 46px -24px rgba(0,0,0,.6)!important}
+#about .ab-card:hover{border-color:rgba(0,160,227,.5)!important;background:rgba(255,255,255,.08)!important}
+#about .ab-ico{background:linear-gradient(150deg,#5fd0ff,#0077b3)!important;border:1px solid rgba(255,255,255,.3)!important;box-shadow:0 0 18px rgba(0,160,227,.35)!important}
+#about .ab-card p{color:rgba(255,255,255,.66)!important}
+#about .ab-purpose{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.17)!important}
+#about .ab-kicker{color:#5fd0ff!important;border-bottom-color:rgba(95,208,255,.6)!important}
+#about .ab-purpose p{color:rgba(255,255,255,.72)!important}
+#about .ab-ghost{border:1.5px solid rgba(95,208,255,.85)!important;color:#5fd0ff!important}
+#about .ab-ghost:hover{background:rgba(0,160,227,.14)!important}
+#about .ab-imgwrap{box-shadow:0 40px 80px -28px rgba(0,0,0,.75),0 0 0 1px rgba(0,160,227,.28),0 0 60px -18px rgba(0,160,227,.25)!important}
+#about .ab-side{color:rgba(255,255,255,.35)!important}
+#about .ab-leaf{box-shadow:0 16px 36px -14px rgba(0,0,0,.6),0 0 0 1px rgba(0,160,227,.3)!important}
+</style><style id="about-bg-fix-final">
+/* Sky/sea photo BAD - cosmetics photo replace */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.93) 0%,rgba(2,12,18,.74) 45%,rgba(2,12,18,.58) 100%),url('https://d3p662obnq9uz2.cloudfront.net/generated-images/9e92ac72.webp') center/cover no-repeat!important}
+</style><style id="about-bg-no-text">
+/* text chhara clean cosmetics background */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.93) 0%,rgba(2,12,18,.74) 45%,rgba(2,12,18,.58) 100%),url('https://d3p662obnq9uz2.cloudfront.net/generated-images/5ebf758b.webp') center/cover no-repeat!important}
+</style><style id="about-bg-user-lab">
+/* user er dewa Clean Beauty Laboratory image as About background */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.93) 0%,rgba(2,12,18,.74) 45%,rgba(2,12,18,.58) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/0129acd7-atm-clean-beauty-lab-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-visible">
+/* overlay halka kore background photo full dekha jabe */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.68) 0%,rgba(2,12,18,.35) 45%,rgba(2,12,18,.08) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/0129acd7-atm-clean-beauty-lab-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-full-photo">
+/* puro photo dekha jabe, kono part kata porbe na */
+#about{background:radial-gradient(ellipse at 50% 0%,#0b4a66 0%,#052333 45%,#020c12 100%)!important}
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.62) 0%,rgba(2,12,18,.25) 45%,rgba(2,12,18,.05) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/0129acd7-atm-clean-beauty-lab-bg.webp') center/contain no-repeat!important}
+</style><style id="about-bg-blue-spa">
+/* user er dewa ATM Blue Spa Skincare Collection - landscape 16:9, cover mode */
+#about{background:radial-gradient(ellipse at 50% 0%,#0b4a66 0%,#052333 45%,#020c12 100%)!important}
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.62) 0%,rgba(2,12,18,.28) 45%,rgba(2,12,18,.05) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/acf82e2c-atm-blue-spa-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-low-opacity">
+/* overlay opacity aro komano - photo aro sposto */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.42) 0%,rgba(2,12,18,.14) 45%,rgba(2,12,18,0) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/acf82e2c-atm-blue-spa-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-full-opacity">
+/* overlay abar bariye deya holo - ager moto */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.62) 0%,rgba(2,12,18,.30) 45%,rgba(2,12,18,.06) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/acf82e2c-atm-blue-spa-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-extra-opacity">
+/* overlay aro barano - text aro sposto porbe */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.80) 0%,rgba(2,12,18,.52) 45%,rgba(2,12,18,.22) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/acf82e2c-atm-blue-spa-bg.webp') center/cover no-repeat!important}
+</style><style id="about-bg-max-opacity">
+/* overlay onek beshi bariye deya holo */
+#about::before{background:linear-gradient(100deg,rgba(2,12,18,.92) 0%,rgba(2,12,18,.74) 45%,rgba(2,12,18,.45) 100%),url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/acf82e2c-atm-blue-spa-bg.webp') center/cover no-repeat!important}
+</style><script id="lab-photo-fix">
+(function(){
+var NEW='https://d3p662obnq9uz2.cloudfront.net/file-interaction/f2869bfe-atm-green-tech-lab.webp';
+function force(){
+var a=document.getElementById('about');if(!a)return;
+var q=a.querySelectorAll('.story-photo img,.ab-imgwrap img');
+for(var i=0;i<q.length;i++){if(q[i].src!==NEW)q[i].src=NEW;}
+}
+var ts=[100,400,800,1300,2000,3000,4500,6000,7500];
+for(var i=0;i<ts.length;i++)setTimeout(force,ts[i]);
+document.addEventListener('DOMContentLoaded',function(){force();setTimeout(force,300);});
+window.addEventListener('load',function(){force();setTimeout(force,500);setTimeout(force,2000);});
+})();
+</script>
+<!-- ===== Packaging in Motion — photo-accurate redesign (appended) ===== -->
+<style id="atm-pim-fix">
+.proc-hero{min-height:92vh}
+.proc-scrim{background:linear-gradient(180deg,rgba(9,51,37,.08),rgba(9,51,37,.6) 72%,rgba(9,51,37,.78) 100%)}
+.proc-card{background:rgba(9,51,37,.45)!important;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:34px 36px;box-shadow:0 8px 32px 0 rgba(0,0,0,.3),inset 1px 1px 0 rgba(255,255,255,.25);max-width:480px}
+.proc-card.left{left:4%;bottom:5%}
+.pim-line{display:block;width:34px;height:2px;border-radius:2px;background:linear-gradient(90deg,#f3c06b,#cba06e);margin-bottom:16px}
+.proc-card.left h2{font-family:"Inter","Hind Siliguri",system-ui,sans-serif!important;font-weight:700;font-size:clamp(30px,3.4vw,44px);letter-spacing:-.02em;line-height:1.08;color:#fff;margin:0 0 14px}
+.proc-card.left h2 em{color:#f3c06b;font-style:normal}
+.proc-card.left p{color:#e5e7eb;margin:0 0 22px;line-height:1.5;font-weight:400;font-size:16px}
+.proc-card.left p .bn{display:block;margin-top:6px;color:rgba(229,231,235,.7);font-size:14px}
+.proc-card.left .btn{background:linear-gradient(135deg,#eed2a6 0%,#cba06e 100%)!important;color:#1a0f00!important;font-weight:700;box-shadow:0 10px 26px -10px rgba(203,160,110,.65)!important;text-shadow:none}
+.proc-card.right{right:4%;bottom:6%;align-items:center;gap:20px;padding:20px;max-width:none}
+.proc-box-img{width:150px!important;height:150px!important;border-radius:16px!important;border:1px solid rgba(255,255,255,.55);box-shadow:0 10px 24px -10px rgba(0,0,0,.55)}
+.proc-right-text{flex:1;min-width:230px;position:relative}
+.proc-right-text span{position:absolute;top:0;right:0;margin:0!important;display:inline-flex!important;align-items:center;gap:7px;padding:4px 12px!important;border-radius:999px!important;border:1px solid rgba(243,192,107,.55);background:rgba(243,192,107,.12)!important;color:#f3c06b!important;font:600 11px "Hind Siliguri",sans-serif}
+.proc-right-text span::before{content:"✓";display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;border:1px solid rgba(243,192,107,.8);font:700 9px/1 "Hind Siliguri",sans-serif}
+.pim-track{position:relative;display:flex;justify-content:space-between;margin-top:26px}
+.pim-track::before{content:"";position:absolute;top:16px;left:16px;right:16px;height:1px;background:rgba(243,192,107,.55)}
+.pim-st{position:relative;z-index:1;display:grid;justify-items:center;gap:7px;width:32px}
+.pim-st i{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;background:rgba(9,51,37,.92)}
+.pim-st i svg{width:15px;height:15px;fill:none;stroke:#f3c06b;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pim-st small{color:#e5e7eb;font:500 11px "Hind Siliguri",sans-serif}
+@media (max-width:820px){
+.proc-hero{min-height:0}
+.proc-card{border-radius:20px;padding:22px}
+.proc-card.right{flex-direction:column;align-items:stretch;gap:16px}
+.proc-box-img{width:100%!important;height:170px!important}
+.proc-right-text span{position:static;margin-top:10px!important}
+.pim-track{margin-top:18px}
+}
+</style>
+<script>
+(function(){function go(){
+var k=document.querySelector('.proc-card.left .kicker');
+if(k){k.outerHTML='<span class="pim-line"></span>';}
+var h=document.querySelector('.proc-card.left h2');
+if(h){h.innerHTML='Packaging in <em>Motion.</em>';}
+var p=document.querySelector('.proc-card.left p');
+if(p){p.innerHTML='Thoughtful packaging. Dependable distribution. We carefully prepare every order with care, so people everywhere can enjoy better care, every day.<span class="bn">প্রতিটি অর্ডার যত্নের সাথে প্রস্তুত করে পাঠানো হয়</span>';}
+var rt=document.querySelector('.proc-right-text');
+if(rt&&!document.querySelector('.pim-track')){rt.insertAdjacentHTML('beforeend','<div class="pim-track" aria-hidden="true"><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg></i><small>Fold</small></div><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8a1 1 0 001 1h16a1 1 0 001-1z"/><path d="M3 8l9 6 9-6"/></svg></i><small>Pack</small></div><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M1 8h13v7H1z"/><path d="M14 11h4l3 3v1h-7z"/><circle cx="6" cy="17" r="1.8"/><circle cx="17.5" cy="17" r="1.8"/></svg></i><small>Deliver</small></div></div>');}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}})();
+</script>
+<!-- ===== end Packaging in Motion fix ===== -->
+
+<!-- ===== v2: Packaging in Motion — exact photo rebuild ===== -->
+<style id="atm-pim-fix-v2">
+#packaging{padding:0!important}
+#packaging .wrap{max-width:none!important;padding:0!important;margin:0!important}
+.proc-hero{min-height:92vh!important;min-height:92svh!important;margin:0!important;border-radius:0!important}
+.proc-bg{border-radius:0!important;background:url('https://d3p662obnq9uz2.cloudfront.net/generated-images/c4c2dced.webp') center/cover no-repeat!important}
+.proc-scrim{background:linear-gradient(180deg,rgba(9,51,37,.10) 0%,rgba(9,51,37,.05) 40%,rgba(9,51,37,.55) 78%,rgba(9,51,37,.80) 100%)!important}
+.proc-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26vh;z-index:1;pointer-events:none;background:radial-gradient(120% 100% at 50% 100%,rgba(9,51,37,.55),transparent 70%);filter:blur(6px)}
+/* ---- left card ---- */
+.proc-card.left{left:4.5%!important;bottom:7%!important;max-width:470px!important;padding:34px 36px!important;background:rgba(9,51,37,.45)!important;-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);border-radius:24px!important;border:1px solid rgba(255,255,255,.15)!important;box-shadow:0 8px 32px 0 rgba(0,0,0,.35),inset 1px 1px 0 rgba(255,255,255,.25)!important}
+.proc-card.left .pim-line{display:block;width:34px;height:2px;border-radius:2px;background:linear-gradient(90deg,#f3c06b,#cba06e);margin-bottom:16px}
+.proc-card.left h2{font-family:"Inter","Hind Siliguri",system-ui,sans-serif!important;font-weight:700!important;font-size:clamp(30px,3.2vw,42px)!important;line-height:1.1!important;letter-spacing:-.02em;color:#fff;margin:0 0 14px!important}
+.proc-card.left h2 em{color:#f3c06b!important;font-style:normal!important}
+.proc-card.left p{color:#e5e7eb!important;font-size:16px!important;line-height:1.5!important;margin:0 0 24px!important;font-weight:400!important}
+.proc-card.left p .bn{display:block;margin-top:6px;color:rgba(229,231,235,.65);font-size:13.5px}
+.proc-card.left .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#eed2a6 0%,#cba06e 100%)!important;color:#1a0f00!important;font:700 14px "Hind Siliguri",sans-serif!important;padding:12px 24px!important;border-radius:999px!important;box-shadow:0 10px 26px -10px rgba(203,160,110,.6)!important;text-shadow:none!important;transition:transform .2s ease,filter .2s ease}
+.proc-card.left .btn:hover{transform:translateY(-2px)}
+/* ---- right card ---- */
+.proc-card.right{right:4.5%!important;bottom:7%!important;padding:20px!important;gap:20px!important;align-items:center!important;background:rgba(9,51,37,.45)!important;-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);border-radius:24px!important;border:1px solid rgba(255,255,255,.15)!important;box-shadow:0 8px 32px 0 rgba(0,0,0,.35),inset 1px 1px 0 rgba(255,255,255,.25)!important}
+.proc-box-img{width:150px!important;height:150px!important;border-radius:16px!important;border:1px solid rgba(255,255,255,.5)!important;box-shadow:0 10px 24px -10px rgba(0,0,0,.55)!important;flex:none!important}
+.proc-right-text{flex:1;min-width:240px;position:relative}
+.proc-right-text b{display:block;max-width:16ch;color:#fff;font:600 15px/1.3 "Hind Siliguri",sans-serif!important}
+.proc-right-text span{position:absolute;top:-6px;right:0;margin:0!important;display:inline-flex!important;align-items:center;gap:7px;padding:4px 12px!important;border-radius:999px!important;border:1px solid rgba(243,192,107,.55)!important;background:rgba(243,192,107,.12)!important;color:#f3c06b!important;font:600 11px "Hind Siliguri",sans-serif!important;white-space:nowrap}
+.proc-right-text span::before{content:"✓";display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;border:1px solid rgba(243,192,107,.8);font:700 9px/1 "Hind Siliguri",sans-serif}
+.pim-track{position:relative;display:flex;justify-content:space-between;margin-top:28px}
+.pim-track::before{content:"";position:absolute;top:16px;left:16px;right:16px;height:1px;background:rgba(243,192,107,.55)}
+.pim-st{position:relative;z-index:1;display:grid;justify-items:center;gap:7px;width:32px}
+.pim-st i{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;background:rgba(9,51,37,.92)}
+.pim-st i svg{width:15px;height:15px;fill:none;stroke:#f3c06b;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pim-st small{color:#e5e7eb;font:500 11px "Hind Siliguri",sans-serif}
+@media (max-width:900px){
+.proc-hero{min-height:0!important}
+.proc-hero::after{display:none}
+.proc-card{position:static!important;max-width:none!important;margin:16px!important;border-radius:20px!important}
+.proc-card.right{flex-direction:column;align-items:stretch!important}
+.proc-box-img{width:100%!important;height:180px!important}
+.proc-right-text span{position:static;margin-top:10px!important}
+.pim-track{margin-top:20px}
+}
+</style>
+<script id="atm-pim-fix-v2-js">
+(function(){
+var NEWBG='https://d3p662obnq9uz2.cloudfront.net/generated-images/c4c2dced.webp';
+function go(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var ph=sec.querySelector('.proc-hero');
+if(ph){
+/* remove old appended fix block (v1) if still present */
+var old=document.getElementById('atm-pim-fix');if(old)old.remove();
+var oldjs=document.querySelector('script#atm-pim-fix ~ script')||document.querySelector('script:last-of-type');
+/* rebuild left card content */
+var k=ph.querySelector('.proc-card.left .kicker, .proc-card.left .pim-line');
+if(k&&k.className&&k.className.indexOf('pim-line')<0){k.outerHTML='<span class="pim-line"></span>';}
+var h=ph.querySelector('.proc-card.left h2');
+if(h){h.innerHTML='Packaging in <em>Motion.</em>';}
+var p=ph.querySelector('.proc-card.left p');
+if(p){p.innerHTML='Thoughtful packaging. Dependable distribution. We carefully prepare every order with care, so people everywhere can enjoy better care, every day.<span class="bn">প্রতিটি অর্ডার যত্নের সাথে প্রস্তুত করে পাঠানো হয়</span>';}
+var btn=ph.querySelector('.proc-card.left .btn');
+if(btn){btn.innerHTML='Explore our process <span aria-hidden="true">→</span>';}
+/* right card: title + badge + stepper */
+var rt=ph.querySelector('.proc-right-text');
+if(rt){
+if(!rt.querySelector('.pim-track')){
+rt.insertAdjacentHTML('beforeend','<div class="pim-track" aria-hidden="true"><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg></i><small>Fold</small></div><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8a1 1 0 001 1h16a1 1 0 001-1z"/><path d="M3 8l9 6 9-6"/></svg></i><small>Pack</small></div><div class="pim-st"><i><svg viewBox="0 0 24 24"><path d="M1 8h13v7H1z"/><path d="M14 11h4l3 3v1h-7z"/><circle cx="6" cy="17" r="1.8"/><circle cx="17.5" cy="17" r="1.8"/></svg></i><small>Deliver</small></div></div>');}
+}
+/* force new background image */
+var bg=ph.querySelector('.proc-bg');
+if(bg){bg.src=NEWBG;}
+}
+/* disable v1 script if it re-runs later */
+var v1=document.querySelector('script#atm-pim-fix');
+if(v1){v1.textContent='/* v1 disabled */';}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}
+})();
+</script>
+<!-- ===== end v2 fix ===== -->
+
+<!-- ===== v3 FINAL: real photo background ===== -->
+<style id="atm-pim-fix-v3">
+#packaging .proc-bg, .proc-hero .proc-bg{background:url('https://d3p662obnq9uz2.cloudfront.net/file-interaction/e35062bc-atm-warehouse-bg.webp') center/cover no-repeat!important}
+</style>
+<script id="atm-pim-fix-v3-js">
+(function(){
+var REAL='https://d3p662obnq9uz2.cloudfront.net/file-interaction/e35062bc-atm-warehouse-bg.webp';
+function go(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var bg=sec.querySelector('.proc-bg');
+if(bg&&bg.src!==REAL){bg.src=REAL;}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}
+var ts=[300,900,1600,2500];
+for(var i=0;i<ts.length;i++)setTimeout(function(){go()},ts[i]);
+})();
+</script>
+<!-- ===== end v3 FINAL ===== -->
+
+<!-- v3b: right-card nested image = crop of real photo -->
+<script id="atm-pim-fix-v3b">
+(function(){
+var THUMB='https://d3p662obnq9uz2.cloudfront.net/file-interaction/b9fb4562-converted_1793543351350.jpg';
+function go(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var im=sec.querySelector('.proc-box-img');
+if(im&&im.src!==THUMB){im.src=THUMB;}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}
+setTimeout(go,800);setTimeout(go,2000);
+})();
+</script>
+<!-- end v3b -->
+
+<style id="atm-pim-fix-v3c">
+/* right card thumb: show crisp crop of the real photo */
+.proc-box-img{object-position:68% 40%!important}
+</style>
+
+<!-- verify-marker-v3 -->
+
+<!-- ===== v4: photo FULL dekha jabe ===== -->
+<style id="atm-pim-fix-v4">
+/* full photo visible — no crop */
+.proc-bg{object-fit:contain!important;object-position:center!important;background:#052a1e!important;border-radius:0!important}
+.proc-bg[src]{width:100%!important;height:100%!important}
+/* scrim onek halka kora holo */
+#packaging .proc-scrim,.proc-hero .proc-scrim{background:linear-gradient(180deg,rgba(9,51,37,0) 0%,rgba(9,51,37,0) 55%,rgba(9,51,37,.28) 100%)!important}
+/* bottom blur overlay off */
+.proc-hero::after{display:none!important}
+@media (max-width:900px){
+.proc-bg{position:relative!important;height:auto!important;min-height:52vh;object-fit:cover!important}
+}
+</style>
+<!-- ===== end v4 ===== -->
+
+<!-- v4b: contain mode e full photo er height ensure + card position thik -->
+<style id="atm-pim-fix-v4b">
+#packaging{padding:0!important;background:#052a1e}
+#packaging .wrap{max-width:none!important;padding:0!important;margin:0!important}
+.proc-hero{min-height:0!important;overflow:visible!important}
+.proc-bg{display:block!important;position:relative!important;width:100%!important;height:auto!important;object-fit:contain!important}
+.proc-scrim{position:absolute!important;inset:0!important}
+/* cards ekhon photo-r niche boshbe, photo-r upor floating na */
+.proc-card{position:static!important;max-width:none!important;margin:0!important}
+#packaging .proc-hero{position:relative!important;display:block!important}
+.proc-cards-row{display:none}
+/* mobile te halka scrim er upor card readable rakhte card bg thakbe */
+@media (min-width:901px){
+.proc-card{position:absolute!important;margin:0!important}
+.proc-card.left{left:4%!important;bottom:6%!important;max-width:470px!important}
+.proc-card.right{right:4%!important;bottom:6%!important}
+}
+@media (max-width:900px){
+.proc-card{position:static!important;margin:16px auto!important;width:calc(100% - 32px)!important}
+.proc-scrim{display:none!important}
+}
+</style>
+
+<!-- v4-final-check -->
+
+<!-- ===== v5: phone e full photo, no extra bars ===== -->
+<style id="atm-pim-fix-v5">
+@media (max-width:900px){
+.proc-bg{position:relative!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;object-fit:contain!important;object-position:top center!important}
+.proc-scrim{display:none!important}
+.proc-hero{min-height:0!important;height:auto!important;overflow:visible!important}
+.proc-card{position:static!important;width:calc(100% - 32px)!important;margin:14px auto!important;max-width:none!important}
+#packaging{padding:0!important;background:#052a1e!important}
+#packaging .wrap{max-width:none!important;padding:0!important;margin:0!important}
+}
+</style>
+<!-- ===== end v5 ===== -->
+
+<!-- ===== v6: right card e carton box photo ===== -->
+<script id="atm-pim-fix-v6">
+(function(){
+var BOX='https://d3p662obnq9uz2.cloudfront.net/generated-images/1da601fe.webp';
+function go(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var im=sec.querySelector('.proc-box-img');
+if(im&&im.src!==BOX){im.src=BOX;}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}
+var ts=[2100,3000,5000,8000];
+for(var i=0;i<ts.length;i++)setTimeout(go,ts[i]);
+})();
+</script>
+<style id="atm-pim-fix-v6c">
+.proc-box-img{object-position:center!important;object-fit:cover!important}
+</style>
+<!-- ===== end v6 ===== -->
+
+<!-- ===== v7: REAL box photo in right card ===== -->
+<script id="atm-pim-fix-v7">
+(function(){
+var BOX='https://d3p662obnq9uz2.cloudfront.net/file-interaction/405a9cf2-atm-box-photo-card.webp';
+function go(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var im=sec.querySelector('.proc-box-img');
+if(im&&im.src!==BOX){im.src=BOX;}
+}
+if(document.readyState!=='loading'){go()}else{document.addEventListener('DOMContentLoaded',go)}
+var ts=[2100,3000,5000,8000,12000];
+for(var i=0;i<ts.length;i++)setTimeout(go,ts[i]);
+})();
+</script>
+<style id="atm-pim-fix-v7c">
+.proc-box-img{object-fit:cover!important;object-position:center!important}
+</style>
+<!-- ===== end v7 ===== -->
+
+<!-- ===== v8: phone e FULL photo — sob fixed height chhire ===== -->
+<style id="atm-pim-fix-v8">
+/* phone + tablet: photo nijer aspect ratio te, kono fixed height na */
+@media (max-width:900px){
+#packaging{padding:0!important}
+#packaging .wrap{max-width:none!important;padding:0!important;margin:0!important;width:100%!important}
+.proc-hero{position:relative!important;display:block!important;min-height:0!important;height:auto!important;overflow:visible!important}
+.proc-bg{
+position:relative!important;
+inset:auto!important;
+top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+display:block!important;
+width:100%!important;
+max-width:100vw!important;
+height:auto!important;
+min-height:0!important;
+max-height:none!important;
+object-fit:contain!important;
+object-position:center!important;
+border-radius:0!important;
+}
+.proc-scrim{display:none!important}
+.proc-cards-row{display:none!important}
+.proc-card{position:static!important;width:calc(100% - 32px)!important;margin:14px auto!important;max-width:none!important}
+}
+</style>
+<script id="atm-pim-fix-v8js">
+/* JS diye image er real aspect-ratio set kora + jodi kono fixed height thake cle kora */
+(function(){
+function fix(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var imgs=sec.querySelectorAll('.proc-bg');
+imgs.forEach(function(img){
+img.removeAttribute('height');
+img.style.height='auto';
+img.style.minHeight='0';
+img.style.maxHeight='none';
+img.style.position='relative';
+img.style.width='100%';
+img.style.objectFit='contain';
+if(img.complete&&img.naturalWidth>0){
+img.style.aspectRatio=img.naturalWidth+' / '+img.naturalHeight;
+}
+});
+var hero=sec.querySelector('.proc-hero');
+if(hero){hero.style.minHeight='0';hero.style.height='auto';hero.style.overflow='visible';}
+}
+function loop(){fix();setTimeout(fix,400);setTimeout(fix,1200);setTimeout(fix,3000);}
+if(document.readyState!=='loading'){loop()}else{document.addEventListener('DOMContentLoaded',loop)}
+window.addEventListener('load',loop);
+window.addEventListener('resize',fix);
+})();
+</script>
+<!-- ===== end v8 ===== -->
+
+<!-- ===== v9: carton box photo phone e FULL dekha jabe ===== -->
+<style id="atm-pim-fix-v9">
+/* sob device te box photo full thakbe (crop na) */
+.proc-box-img{object-fit:contain!important;object-position:center!important;background:#062a1f!important}
+/* phone e box photo boro + full, card er upore alada block */
+@media (max-width:900px){
+.proc-card.right{flex-direction:column!important;align-items:stretch!important}
+.proc-box-img{
+width:100%!important;
+height:auto!important;
+max-width:none!important;
+flex:none!important;
+display:block!important;
+aspect-ratio:1/1!important;
+border-radius:14px!important;
+border:1px solid rgba(255,255,255,.25)!important;
+}
+}
+</style>
+<script id="atm-pim-fix-v9js">
+(function(){
+var BOX='https://d3p662obnq9uz2.cloudfront.net/file-interaction/405a9cf2-atm-box-photo-card.webp';
+function fix(){
+var sec=document.getElementById('packaging');
+if(!sec)return;
+var im=sec.querySelector('.proc-box-img');
+if(!im)return;
+im.src=BOX;
+/* sob fixed height chhire, full photo dekhate */
+im.style.width='';
+im.style.height='auto';
+im.style.maxWidth='none';
+im.style.objectFit='contain';
+im.style.objectPosition='center';
+if(window.innerWidth<=900){
+im.style.width='100%';
+im.style.display='block';
+}
+}
+if(document.readyState!=='loading'){fix()}else{document.addEventListener('DOMContentLoaded',fix)}
+var ts=[500,1500,3000,6000];
+for(var i=0;i<ts.length;i++)setTimeout(fix,ts[i]);
+window.addEventListener('load',fix);
+window.addEventListener('resize',fix);
+})();
+</script>
+<!-- ===== end v9 ===== -->
+
+<!-- ===== v12: phone polish — CSS only, kono JS inline style nei ===== -->
+<style id="atm-pim-fix-v12">
+@media (max-width:900px){
+#packaging{background:#052a1e!important;padding:0 0 10px!important}
+
+/* left card */
+.proc-card.left{
+background:rgba(9,51,37,.62)!important;
+border:1px solid rgba(255,255,255,.16)!important;
+border-radius:18px!important;
+padding:22px 20px!important;
+backdrop-filter:blur(16px)!important;
+-webkit-backdrop-filter:blur(16px)!important;
+box-shadow:0 16px 36px -18px rgba(0,0,0,.6)!important;
+}
+.proc-card.left .kicker{font-size:11px!important;letter-spacing:2.2px!important;color:#cfa94f!important}
+.proc-card.left h2{font-size:clamp(28px,7.5vw,38px)!important;line-height:1.1!important;margin:8px 0 10px!important}
+.proc-card.left h2 em{color:#e0b84f!important}
+.proc-card.left p{font-size:15px!important;line-height:1.6!important;margin:0 0 16px!important;color:#d8e5de!important}
+.proc-card.left .btn{
+display:block!important;width:100%!important;text-align:center!important;
+padding:13px 18px!important;font-size:15px!important;border-radius:999px!important;
+background:linear-gradient(#EED2A6,#CBA06E)!important;color:#2a1e06!important;
+box-shadow:0 10px 24px -8px rgba(238,210,166,.5)!important;
+}
+
+/* right card */
+.proc-card.right{
+background:rgba(9,51,37,.62)!important;
+border:1px solid rgba(255,255,255,.16)!important;
+border-radius:18px!important;
+padding:20px!important;
+flex-direction:column!important;align-items:stretch!important;gap:14px!important;
+backdrop-filter:blur(16px)!important;
+-webkit-backdrop-filter:blur(16px)!important;
+box-shadow:0 16px 36px -18px rgba(0,0,0,.6)!important;
+}
+.proc-box-img{
+width:100%!important;height:auto!important;max-width:320px!important;
+margin:0 auto!important;display:block!important;
+border-radius:14px!important;border:1px solid rgba(255,255,255,.22)!important;
+object-fit:contain!important;
+}
+.proc-right-text b{font-size:16px!important;line-height:1.35!important}
+.proc-right-text span{
+display:inline-flex!important;align-items:center!important;gap:6px!important;
+margin-top:10px!important;padding:7px 14px!important;border-radius:999px!important;
+background:linear-gradient(90deg,rgba(238,210,166,.28),rgba(238,210,166,.12))!important;
+border:1px solid rgba(238,210,166,.45)!important;
+color:#eed2a6!important;font-size:12px!important;font-weight:600!important;letter-spacing:.8px!important;
+}
+
+/* Fold / Pack / Deliver stepper */
+.proc-steps{grid-template-columns:repeat(3,1fr)!important;gap:10px!important;margin-top:16px!important;text-align:center!important}
+.proc-steps>div{padding:12px 6px!important;border-radius:14px!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.12)!important}
+.proc-steps i{width:34px!important;height:34px!important;font-size:13px!important;margin-bottom:6px!important;background:rgba(238,210,166,.14)!important;color:#eed2a6!important}
+.proc-steps b{font-size:15px!important;margin-bottom:2px!important}
+.proc-steps span{font-size:11.5px!important;line-height:1.35!important}
+}
+</style>
+<!-- ===== end v12 ===== -->
+
+<script id="kc-add-4-new-final">
+(function(){
+var P=[
+['Ketoclean Shampoo','Anti-dandruff care · 100ml','৳ 140 · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/file-interaction/7f286fb7-product-photo-new.webp'],
+['Ketoclean Conditioner','Nourishes & smooths · 200ml','৳ 160 · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/fbde07d3.webp'],
+['Hair Repair Serum','Repairs & strengthens · 50ml','৳ 280 · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/2bf5e443.webp'],
+['Scalp Care Gel','Soothes & refreshes · 75ml','৳ 190 · শীঘ্রই আসছে','https://d3p662obnq9uz2.cloudfront.net/generated-images/80d79e10.webp']
+];
+function add(){
+var g=document.getElementById('futGrid2')||document.getElementById('futGrid');
+if(!g||g.children.length<1)return;
+if(g.querySelector('.kc-new4'))return;
+var base=g.children[g.children.length-1].getAttribute('style')||'background:var(--gl-bg);border:1px solid var(--gl-bd);box-shadow:var(--gl-sh);border-radius:32px;padding:8px;position:relative';
+P.forEach(function(it){
+var d=document.createElement('div');
+d.className='kc-new4';
+d.setAttribute('style',base);
+d.innerHTML='<span style="position:absolute;top:17px;left:17px;z-index:2;padding:5px 12px;border-radius:999px;font:600 11px Hind Siliguri,sans-serif;color:#4fd37a;background:rgba(37,211,102,.14);border:1px solid rgba(79,211,122,.35)">Coming soon</span>'+
+'<div style="aspect-ratio:1/1;border-radius:25px;overflow:hidden;background:linear-gradient(160deg,#0b4a66,#04141d)"><img src="'+it[3]+'" alt="'+it[0]+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"></div>'+
+'<div style="padding:14px 12px;text-align:center"><b style="display:block;font:600 21px Cormorant Garamond,serif;color:var(--ink)">'+it[0]+'</b><span style="display:block;color:var(--soft);font-size:14px;margin-top:3px">'+it[1]+'</span><i style="display:block;font-style:normal;font:500 12px Hind Siliguri,sans-serif;color:var(--mute3);margin-top:8px">'+it[2]+'</i></div>';
+g.appendChild(d);
+});
+}
+add();
+setInterval(add,800);
+window.addEventListener('load',add);
+})();
+</script>
+<script id="kc-new4-details">
+(function(){
+var D={
+'Ketoclean Shampoo':{s:'100ml · ৳ 140',d:'কেটোক্লিন শ্যাম্পু — কিটোকোনাজল সমৃদ্ধ অ্যান্টি-ড্যান্ড্রাফ ফর্মুলা। খুসকি ও স্ক্যাল্পের চুলকানি কমায়, চুল রাখে টাটকা ও পরিষ্কার। ডার্মাটোলজিক্যালি টেস্টেড।',p:['খুসকি ও ড্যান্ড্রাফ কমায়','স্ক্যাল্পকে শান্ত ও তাজা রাখে','কিটোকোনাজল ও নায়াসিনামাইড সমৃদ্ধ','ডার্মাটোলজিক্যালি টেস্টেড']},
+'Ketoclean Conditioner':{s:'200ml · ৳ 160',d:'কেটোক্লিন কন্ডিশনার — শ্যাম্পুর পরে ব্যবহার করলে চুল হয় মসৃণ, কোমল ও সহজেই আচরণযোগ্য। প্রতিটি ধারায় পুষ্টি জোগায়।',p:['চুলকে মসৃণ ও কোমল করে','জট ছাড়াতে সাহায্য করে','চুলে প্রাকৃতিক উজ্জ্বলতা ফেরায়','হালকা ও নন-গ্রিজি ফিনিশ']},
+'Hair Repair Serum':{s:'50ml · ৳ 280',d:'হেয়ার রিপেয়ার সিরাম — ক্ষতিগ্রস্ত ও ভাঙা চুল মেরামত করে, চুলের গোড়া শক্ত করে এবং রুখি ভাব দূর করে।',p:['ক্ষতিগ্রস্ত চুল মেরামত করে','চুলের গোড়া শক্ত করে','রুখি-ভাঙা চুল পুষ্ট করে','তাৎক্ষণিক মসৃণতা দেয়']},
+'Scalp Care Gel':{s:'75ml · ৳ 190',d:'স্ক্যাল্প কেয়ার জেল — ঠান্ডা ও হালকা ফর্মুলা যা স্ক্যাল্পকে শান্ত রাখে, চুলকানি ও জ্বালাপোড়া কমায়।',p:['স্ক্যাল্পকে ঠান্ডা ও শান্ত করে','চুলকানি ও জ্বালাপোড়া কমায়','অয়েলি ভাব ছাড়াই হালকা','নিয়মিত ব্যবহারযোগ্য']}
+};
+document.addEventListener('click',function(e){
+var card=e.target&&e.target.closest?e.target.closest('.kc-new4'):null;
+if(!card)return;
+e.stopPropagation();
+e.preventDefault();
+var b=card.querySelector('b');if(!b)return;
+var name=b.textContent.trim();
+var x=D[name];if(!x)return;
+var o=document.getElementById('futModalOverlay');if(!o)return;
+o.querySelectorAll('.fmName')[0].textContent=name;
+o.querySelectorAll('.fmSize')[0].textContent=x.s;
+o.querySelectorAll('.fmDesc')[0].textContent=x.d;
+var img=card.querySelector('img');
+o.querySelectorAll('.fmBannerImg')[0].src=img?img.getAttribute('src'):'';
+var ul=o.querySelectorAll('.fmPoints')[0];ul.innerHTML='';
+x.p.forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li)});
+var st=o.querySelectorAll('.fmAnim');
+for(var i=0;i<st.length;i++)st[i].style.transitionDelay=(0.15+i*0.12)+'s';
+o.style.display='flex';
+requestAnimationFrame(function(){o.classList.add('fmOpen')});
+document.body.style.overflow='hidden';
+},true);
+})();
+</script>
+<script id="kc-conditioner-newphoto">
+(function(){
+var NEW='https://d3p662obnq9uz2.cloudfront.net/generated-images/15656e02.webp';
+function fix(){
+var els=document.querySelectorAll('.kc-new4 img');
+for(var i=0;i<els.length;i++){
+var im=els[i];
+if((im.getAttribute('alt')||'').indexOf('Ketoclean Conditioner')>-1&&im.src!==NEW){
+im.src=NEW;
+im.setAttribute('loading','eager');
+}
+}
+}
+fix();
+setInterval(fix,500);
+window.addEventListener('load',fix);
+})();
+</script>
+<script id="kc-dedup-final">
+(function(){
+var NEW=['Ketoclean Shampoo','Ketoclean Conditioner','Hair Repair Serum','Scalp Care Gel'];
+function norm(s){return (s||'').replace(/\s+/g,'')}
+function clean(){
+var g=document.getElementById('futGrid2')||document.getElementById('futGrid');
+if(!g)return;
+var cards=[].slice.call(g.children);
+/* 1) bhanga chobi wala card gula remove */
+cards.forEach(function(c){
+var im=c.querySelector('img');
+if(!im)return;
+var s=im.getAttribute('src')||'';
+if(s.indexOf('http')!==0){if(c.parentNode)c.parentNode.removeChild(c)}
+});
+/* 2) notun 4 product er duplicate remove — protita ekbar thakbe */
+var groups={};
+[].slice.call(g.children).forEach(function(c){
+var b=c.querySelector('b');
+if(!b)return;
+if((c.textContent||'').indexOf('৳')<0)return;
+var n=norm(b.textContent);
+var isNew=false;
+for(var i=0;i<NEW.length;i++){if(n===norm(NEW[i])){isNew=true;break}}
+if(!isNew)return;
+if(!groups[n])groups[n]=[];
+groups[n].push(c);
+});
+for(var n in groups){
+var list=groups[n];
+var keep=null;
+for(var i=0;i<list.length;i++){if((' '+list[i].className+' ').indexOf('kc-new4')>-1){keep=list[i];break}}
+if(!keep)keep=list[0];
+for(var i=0;i<list.length;i++){if(list[i]!==keep&&list[i].parentNode)list[i].parentNode.removeChild(list[i])}
+}
+}
+clean();
+setInterval(clean,500);
+window.addEventListener('load',clean);
+})();
+</script>
+<script id="kc-price-remove-final">
+(function(){
+var NEW=['KetocleanShampoo','KetocleanConditioner','HairRepairSerum','ScalpCareGel'];
+function norm(s){return (s||'').replace(/\s+/g,'')}
+function go(){
+var g=document.getElementById('futGrid2')||document.getElementById('futGrid');
+if(!g)return;
+[].slice.call(g.children).forEach(function(c){
+var b=c.querySelector('b');
+if(!b)return;
+var n=norm(b.textContent);
+if(NEW.indexOf(n)<0)return;
+var isNew4=(' '+c.className+' ').indexOf('kc-new4')>-1;
+var hasTaka=(c.textContent||'').indexOf('৳')>-1;
+if(!isNew4&&hasTaka){if(c.parentNode)c.parentNode.removeChild(c);return}
+if(isNew4){
+var i=c.querySelector('i');
+if(i){var t=i.textContent.replace(/৳\s*\d+(\.\d+)?\s*·\s*/g,'');if(t!==i.textContent)i.textContent=t}
+}
+});
+var fms=document.querySelectorAll('#futModalOverlay .fmSize');
+for(var k=0;k<fms.length;k++){var t=fms[k].textContent.replace(/\s*·\s*৳\s*\d+(\.\d+)?/g,'');if(t!==fms[k].textContent)fms[k].textContent=t}
+}
+go();
+setInterval(go,500);
+window.addEventListener('load',go);
+})();
+</script>
+<script id="kc-watermark-hide">
+(function(){
+var WM=['15656e02','2bf5e443','80d79e10'];
+function fix(){
+var els=document.querySelectorAll('#futGrid2 img, #futGrid img, #futModalOverlay img');
+for(var i=0;i<els.length;i++){
+var im=els[i];
+var s=im.getAttribute('src')||'';
+var hit=false;
+for(var j=0;j<WM.length;j++){if(s.indexOf(WM[j])>-1){hit=true;break}}
+if(!hit)continue;
+im.setAttribute('loading','eager');
+im.style.width='100%';
+im.style.height='100%';
+im.style.objectFit='cover';
+im.style.objectPosition='top center';
+im.style.transform='scale(1.18)';
+im.style.transformOrigin='top center';
+}
+}
+fix();
+setInterval(fix,600);
+window.addEventListener('load',fix);
+})();
+</script>
